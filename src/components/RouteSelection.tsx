@@ -93,94 +93,83 @@ export default function RouteSelection() {
           </div>
         </div>
 
-        {/* Drake's Handwritten Journal Header */}
+        {/* Main Title & Progress with Uncharted Distressed Typography */}
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '0.72rem', color: '#8C6A32', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '2px', fontFamily: 'var(--font-mono)', marginBottom: '0.2rem' }}>
-            ✦ RESEARCH EXPEDITION MAP ✦
-          </div>
-          <h1
+          <div
             style={{
-              fontSize: '1.85rem',
+              fontSize: '1.8rem',
               color: '#2C1E14',
+              fontWeight: '900',
+              textTransform: 'uppercase',
+              letterSpacing: '4px',
               fontFamily: 'var(--font-title)',
-              margin: '0.2rem 0 0.4rem',
-              letterSpacing: '1px',
-              textShadow: '0 1px 0 rgba(255,255,255,0.6)',
+              textShadow: '0 1px 0 rgba(255,255,255,0.7)',
+              lineHeight: '1.1',
             }}
           >
-            Chart Your Next Sector
-          </h1>
-          <p style={{ fontSize: '0.95rem', color: '#523D24', fontFamily: 'var(--font-serif)', fontStyle: 'italic', margin: 0, lineHeight: '1.4' }}>
-            &quot;Three lost research sectors remain on this map. Enter a lab to log observations & unearth relics.&quot;
-          </p>
-        </div>
-
-        {/* Sector Completion Tracker Box */}
-        <div
-          style={{
-            marginTop: '1.25rem',
-            padding: '0.9rem 1rem',
-            backgroundColor: '#EBD9B4',
-            border: '1px solid #A88448',
-            borderRadius: '6px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)',
-          }}
-        >
-          <div>
-            <div style={{ fontSize: '0.68rem', color: '#652B19', fontWeight: '800', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '0.8px' }}>
-              SECTOR DISCOVERY RATE
-            </div>
-            <div style={{ fontSize: '1rem', color: '#2C1E14', fontWeight: '800', fontFamily: 'var(--font-display)', marginTop: '2px' }}>
-              {completedCount} of {totalLabs} Sectors Discovered
-            </div>
+            EXPEDITION STATUS
           </div>
-          <div style={{ display: 'flex', gap: '8px' }}>
+
+          <div
+            style={{
+              fontSize: '1.05rem',
+              color: '#652B19',
+              fontWeight: '800',
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+              fontFamily: 'var(--font-mono)',
+              marginTop: '0.4rem',
+            }}
+          >
+            {completedCount} OF {totalLabs} DESTINATIONS DISCOVERED
+          </div>
+
+          {/* Progress Dots */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '0.8rem' }}>
             {Object.keys(expeditionLabs).map((labId) => {
               const done = isLabCompleted(labId, userEmail);
               return (
                 <span
                   key={labId}
                   style={{
-                    width: '14px',
-                    height: '14px',
+                    width: '16px',
+                    height: '16px',
                     borderRadius: '50%',
                     backgroundColor: done ? '#1F3A2B' : '#C4B496',
-                    border: done ? '1.5px solid #D4AF37' : '1px solid #8C785B',
-                    boxShadow: done ? '0 0 8px rgba(74,222,128,0.5)' : 'none',
+                    border: done ? '2px solid #D4AF37' : '1.5px solid #8C785B',
+                    boxShadow: done ? '0 0 10px rgba(74,222,128,0.7)' : 'inset 0 1px 3px rgba(0,0,0,0.3)',
                     display: 'inline-block',
                   }}
                 />
               );
             })}
           </div>
-        </div>
 
-        {/* Final Certificate Claim Button */}
-        {allLabsFinished && (
-          <button
-            onClick={() => router.push('/finish')}
-            className="simple-btn-primary gold-pulse"
-            style={{
-              marginTop: '1.25rem',
-              width: '100%',
-              padding: '1rem',
-              fontSize: '0.95rem',
-              backgroundColor: '#1F3A2B',
-            }}
-          >
-            🏆 Unearth Master Certificate & Claim Relics
-          </button>
-        )}
+          {/* Final Certificate Claim Button */}
+          {allLabsFinished && (
+            <button
+              onClick={() => router.push('/finish')}
+              className="simple-btn-primary gold-pulse"
+              style={{
+                marginTop: '1.25rem',
+                width: '100%',
+                padding: '1rem',
+                fontSize: '0.95rem',
+                backgroundColor: '#1F3A2B',
+              }}
+            >
+              🏆 Unearth Master Certificate & Claim Relics
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Lab Selection Journal Entry Cards */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-        {Object.values(expeditionLabs).map((lab) => {
+      {/* Lab Selection Cards */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+        {Object.values(expeditionLabs).map((lab, index) => {
           const progress = getLabDiscoveryProgress(lab.sourceLab, userEmail);
           const finished = isLabCompleted(lab.sourceLab, userEmail);
+          const numStr = String(index + 1).padStart(2, '0');
 
           return (
             <div
@@ -196,10 +185,20 @@ export default function RouteSelection() {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: '#652B19', fontWeight: '800', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}>
-                    {lab.name}
+                  <div style={{ fontSize: '1rem', color: '#D4AF37', fontWeight: '900', fontFamily: 'var(--font-mono)', letterSpacing: '2px' }}>
+                    {numStr}
                   </div>
-                  <div style={{ fontSize: '1.35rem', fontWeight: '800', color: '#2C1E14', fontFamily: 'var(--font-display)', marginTop: '2px' }}>
+                  <div
+                    style={{
+                      fontSize: '1.6rem',
+                      fontWeight: '900',
+                      color: '#2C1E14',
+                      fontFamily: 'var(--font-title)',
+                      textTransform: 'uppercase',
+                      letterSpacing: '2px',
+                      marginTop: '2px',
+                    }}
+                  >
                     {lab.title}
                   </div>
                 </div>
@@ -226,7 +225,7 @@ export default function RouteSelection() {
                   fontSize: '0.85rem',
                 }}
               >
-                {finished ? 'Inspect Map Records →' : 'Enter Lab Sector →'}
+                {finished ? `Inspect ${lab.title} Records →` : `Enter ${lab.title} →`}
               </button>
             </div>
           );
@@ -235,4 +234,3 @@ export default function RouteSelection() {
     </div>
   );
 }
-

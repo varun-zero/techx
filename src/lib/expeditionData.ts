@@ -21,13 +21,13 @@ export const expeditionLabs: Record<string, ExpeditionLabConfig> = {
   a: {
     labId: 'a',
     sourceLab: 'a',
-    name: 'LAB 308-A',
-    title: 'THE ARCHIVE',
+    name: 'CHAPTER 01',
+    title: "KING'S BAY",
     description: 'Uncover lost technological blueprints, wireless relays, and early hardware prototypes.',
     mapImage: '/assets/uncharted/world-map.jpg',
     labImage: '/assets/uncharted/world-map.jpg',
     fragmentId: 1,
-    fragmentName: 'FRAGMENT I — BLUEPRINT SEALS',
+    fragmentName: "FRAGMENT I — KING'S BAY MAP",
     fragmentImage: '/assets/uncharted/world-map.jpg',
     checkpoints: {
       a1: { x: 25.0, y: 38.0 }, // Trueconnect.jio (Americas North)
@@ -42,13 +42,13 @@ export const expeditionLabs: Record<string, ExpeditionLabConfig> = {
   c: {
     labId: 'c',
     sourceLab: 'c',
-    name: 'LAB 308-C',
-    title: 'THE FORGE',
+    name: 'CHAPTER 02',
+    title: 'LIBERTALIA',
     description: 'Explore ongoing hardware inventions, IoT telemetry, and smart home ecosystems.',
     mapImage: '/assets/uncharted/world-map.jpg',
     labImage: '/assets/uncharted/world-map.jpg',
     fragmentId: 2,
-    fragmentName: 'FRAGMENT II — FORGE INSIGNIA',
+    fragmentName: 'FRAGMENT II — LIBERTALIA SEAL',
     fragmentImage: '/assets/uncharted/world-map.jpg',
     checkpoints: {
       c1: { x: 22.0, y: 32.0 }, // SimilaCure
@@ -65,13 +65,13 @@ export const expeditionLabs: Record<string, ExpeditionLabConfig> = {
   d: {
     labId: 'd',
     sourceLab: 'd',
-    name: 'LAB 308-D',
-    title: 'THE VAULT',
+    name: 'CHAPTER 03',
+    title: 'NEW DEVON',
     description: 'Venture deep into high-security AI algorithms, neural tools, and experimental software.',
     mapImage: '/assets/uncharted/world-map.jpg',
     labImage: '/assets/uncharted/world-map.jpg',
     fragmentId: 3,
-    fragmentName: 'FRAGMENT III — VAULT KEYSTONE',
+    fragmentName: 'FRAGMENT III — NEW DEVON KEYSTONE',
     fragmentImage: '/assets/uncharted/world-map.jpg',
     checkpoints: {
       d1: { x: 20.0, y: 28.0 }, // DND Services
