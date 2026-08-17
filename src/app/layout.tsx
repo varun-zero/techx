@@ -9,9 +9,26 @@ import XpBar from '@/components/XpBar';
 import CompletionChecker from '@/components/CompletionChecker';
 import "./globals.css";
 
+import { Inter, Antonio, IM_Fell_English } from 'next/font/google';
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+});
+
+const antonio = Antonio({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-uncharted-title',
+  display: 'swap',
+});
+
+const imFell = IM_Fell_English({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: ['italic'],
+  variable: '--font-uncharted-serif',
   display: 'swap',
 });
 
@@ -26,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${antonio.variable} ${imFell.variable}`}>
       <body>
         <AdminProvider>
           <AchievementProvider>

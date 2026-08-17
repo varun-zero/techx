@@ -94,38 +94,36 @@ export default function RouteSelection() {
         </div>
 
         {/* Main Title & Progress with Uncharted Distressed Typography */}
-        <div style={{ textAlign: 'center' }}>
-          <div
+        <div style={{ textAlign: 'center', margin: '0.8rem 0 0.5rem' }}>
+          <h1
+            className="uncharted-title"
             style={{
-              fontSize: '1.8rem',
-              color: '#2C1E14',
-              fontWeight: '900',
-              textTransform: 'uppercase',
-              letterSpacing: '4px',
-              fontFamily: 'var(--font-title)',
-              textShadow: '0 1px 0 rgba(255,255,255,0.7)',
-              lineHeight: '1.1',
+              fontSize: '2.6rem',
+              lineHeight: '0.95',
+              letterSpacing: '0px',
+              margin: '0.4rem 0',
+              padding: '0.4rem 0',
+              color: '#1A120B',
             }}
           >
             EXPEDITION STATUS
-          </div>
+          </h1>
 
-          <div
-            style={{
-              fontSize: '1.05rem',
-              color: '#652B19',
-              fontWeight: '800',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              fontFamily: 'var(--font-mono)',
-              marginTop: '0.4rem',
-            }}
-          >
-            {completedCount} OF {totalLabs} DESTINATIONS DISCOVERED
+          <div style={{ margin: '0.6rem 0' }}>
+            <span
+              className="uncharted-sub-title"
+              style={{
+                fontSize: '1.25rem',
+                lineHeight: '1',
+                color: '#652B19',
+              }}
+            >
+              {completedCount} OF {totalLabs} DESTINATIONS DISCOVERED
+            </span>
           </div>
 
           {/* Progress Dots */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '0.8rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '0.6rem' }}>
             {Object.keys(expeditionLabs).map((labId) => {
               const done = isLabCompleted(labId, userEmail);
               return (
@@ -178,25 +176,31 @@ export default function RouteSelection() {
               className="simple-card vintage-border"
               style={{
                 borderColor: finished ? '#1F3A2B' : '#A88448',
-                padding: '1.25rem 1.2rem',
+                padding: '1.35rem 1.25rem',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
                 <div>
-                  <div style={{ fontSize: '1rem', color: '#D4AF37', fontWeight: '900', fontFamily: 'var(--font-mono)', letterSpacing: '2px' }}>
+                  <div
+                    className="uncharted-title"
+                    style={{
+                      fontSize: '1.6rem',
+                      color: '#652B19',
+                      lineHeight: '1',
+                      marginRight: '8px',
+                    }}
+                  >
                     {numStr}
                   </div>
                   <div
+                    className="uncharted-title"
                     style={{
-                      fontSize: '1.6rem',
-                      fontWeight: '900',
-                      color: '#2C1E14',
-                      fontFamily: 'var(--font-title)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '2px',
-                      marginTop: '2px',
+                      fontSize: '2.4rem',
+                      lineHeight: '0.9',
+                      color: '#1A120B',
+                      letterSpacing: '-0.5px',
                     }}
                   >
                     {lab.title}
@@ -207,13 +211,13 @@ export default function RouteSelection() {
                   <div style={{ fontSize: '0.68rem', color: '#6B553B', fontWeight: '700', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>
                     EVALUATED
                   </div>
-                  <div style={{ fontSize: '1.15rem', fontWeight: '800', color: finished ? '#1F3A2B' : '#2C1E14', fontFamily: 'var(--font-display)' }}>
+                  <div style={{ fontSize: '1.2rem', fontWeight: '800', color: finished ? '#1F3A2B' : '#2C1E14', fontFamily: 'var(--font-display)' }}>
                     {progress.completed} / {progress.total}
                   </div>
                 </div>
               </div>
 
-              <div style={{ fontSize: '0.92rem', color: '#422F1B', fontFamily: 'var(--font-serif)', fontStyle: 'italic', lineHeight: '1.45', marginBottom: '1rem' }}>
+              <div style={{ fontSize: '0.92rem', color: '#422F1B', fontFamily: 'var(--font-serif)', fontStyle: 'italic', lineHeight: '1.45', marginBottom: '1rem', marginTop: '0.4rem' }}>
                 {lab.description}
               </div>
 
@@ -221,8 +225,8 @@ export default function RouteSelection() {
                 className="simple-btn-primary"
                 style={{
                   width: '100%',
-                  padding: '0.8rem',
-                  fontSize: '0.85rem',
+                  padding: '0.85rem',
+                  fontSize: '0.9rem',
                 }}
               >
                 {finished ? `Inspect ${lab.title} Records →` : `Enter ${lab.title} →`}

@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800;900&family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=League+Gothic&family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@600;700&family=Inter:wght@400;600;700&display=swap');
 
 :root {
   /* Uncharted Lost Treasure Palette */
@@ -23,9 +23,10 @@
   --primary-hover: var(--uc-gold-bright);
   --text-muted: #6B553B;
 
-  /* Typography */
-  --font-title: "Cinzel Decorative", "Cinzel", Georgia, serif;
-  --font-display: "Cinzel", Georgia, serif;
+  /* Typography - Ultra Tall Condensed Uncharted Comic Style */
+  --font-uncharted-title: var(--font-uncharted-title), "Antonio", "League Gothic", "Impact", "Trebuchet MS", sans-serif;
+  --font-title: var(--font-uncharted-title);
+  --font-display: var(--font-uncharted-title);
   --font-serif: "IM Fell English", Georgia, serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
@@ -125,6 +126,32 @@ button, input, select, textarea {
 
 .gold-pulse {
   animation: goldPulse 2.2s infinite;
+}
+
+/* Uncharted Distressed Ultra-Tall Condensed Title Typography */
+.uncharted-title {
+  font-family: var(--font-uncharted-title);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  transform: scaleY(1.45);
+  transform-origin: center;
+  display: inline-block;
+  color: #1A120B;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  filter: contrast(140%) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+.uncharted-sub-title {
+  font-family: var(--font-uncharted-title);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transform: scaleY(1.25);
+  transform-origin: center;
+  display: inline-block;
+  color: #652B19;
+  filter: contrast(120%);
 }
 
 /* Vintage Map Grid Background Overlay */
