@@ -92,7 +92,7 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
               lineHeight: '1.4',
             }}
           >
-            "Every lost treasure requires a map. Yours begins here — log your credentials to chart the uncharted."
+            &quot;Every lost treasure requires a map. Yours begins here — log your credentials to chart the uncharted.&quot;
           </p>
         </div>
 
