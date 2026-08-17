@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from 'next/font/google';
 import { UserProvider } from '@/context/UserContext';
 import { AchievementProvider } from '@/context/AchievementContext';
 import { CompletionProvider } from '@/context/CompletionContext';
