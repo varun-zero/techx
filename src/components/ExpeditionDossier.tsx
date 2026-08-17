@@ -43,59 +43,71 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
       }}
     >
       <div
-        className="simple-card"
+        className="simple-card vintage-border"
         style={{
-          padding: '2rem 1.5rem',
+          padding: '2.25rem 1.75rem',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+        {/* Corner Embellishments */}
+        <div style={{ position: 'absolute', top: '8px', left: '10px', fontSize: '0.8rem', color: '#A88448', pointerEvents: 'none' }}>✦</div>
+        <div style={{ position: 'absolute', top: '8px', right: '10px', fontSize: '0.8rem', color: '#A88448', pointerEvents: 'none' }}>✦</div>
+        <div style={{ position: 'absolute', bottom: '8px', left: '10px', fontSize: '0.8rem', color: '#A88448', pointerEvents: 'none' }}>✦</div>
+        <div style={{ position: 'absolute', bottom: '8px', right: '10px', fontSize: '0.8rem', color: '#A88448', pointerEvents: 'none' }}>✦</div>
+
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
           <div
             style={{
               fontSize: '0.75rem',
-              letterSpacing: '2px',
-              color: 'var(--uc-gold)',
+              letterSpacing: '3px',
+              color: '#652B19',
               fontWeight: '700',
               fontFamily: 'var(--font-mono)',
               textTransform: 'uppercase',
-              marginBottom: '0.25rem',
+              marginBottom: '0.35rem',
             }}
           >
-            🧭 EXPEDITION LOG DOSSIER
+            🧭 EXPEDITION LOG DOSSIER • N° 1897
           </div>
           <h1
             style={{
-              fontSize: '1.85rem',
-              color: '#2A2017',
+              fontSize: '2rem',
+              color: '#2C1E14',
               margin: '0.2rem 0 0.5rem',
-              fontFamily: 'var(--font-display)',
-              letterSpacing: '1px',
+              fontFamily: 'var(--font-title)',
+              letterSpacing: '1.5px',
+              textShadow: '0 1px 1px rgba(255,255,255,0.6)',
             }}
           >
             Register Your Alias
           </h1>
           <p
             style={{
-              fontSize: '0.9rem',
-              color: '#584937',
+              fontSize: '0.95rem',
+              color: '#523D24',
+              fontFamily: 'var(--font-serif)',
+              fontStyle: 'italic',
               margin: 0,
+              lineHeight: '1.4',
             }}
           >
-            Every treasure hunter needs a map. Yours starts here — enter your coordinates to begin.
+            "Every lost treasure requires a map. Yours begins here — log your credentials to chart the uncharted."
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
           <div>
             <label
               style={{
                 display: 'block',
                 fontSize: '0.75rem',
                 fontWeight: '700',
-                fontFamily: 'var(--font-mono)',
-                color: '#584937',
+                fontFamily: 'var(--font-display)',
+                color: '#422F1B',
                 textTransform: 'uppercase',
-                letterSpacing: '1px',
-                marginBottom: '4px',
+                letterSpacing: '1.5px',
+                marginBottom: '5px',
               }}
             >
               ✦ Explorer Alias (Full Name)
@@ -108,13 +120,15 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
               required
               style={{
                 width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#ffffff',
-                border: '1.5px solid #C5A059',
-                borderRadius: '6px',
-                color: '#2A2017',
-                fontSize: '0.95rem',
+                padding: '0.8rem 0.9rem',
+                backgroundColor: '#FFFDF7',
+                border: '1.5px solid #A88448',
+                borderRadius: '4px',
+                color: '#2C1E14',
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1rem',
                 boxSizing: 'border-box',
+                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
               }}
             />
           </div>
@@ -125,14 +139,14 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
                 display: 'block',
                 fontSize: '0.75rem',
                 fontWeight: '700',
-                fontFamily: 'var(--font-mono)',
-                color: '#584937',
+                fontFamily: 'var(--font-display)',
+                color: '#422F1B',
                 textTransform: 'uppercase',
-                letterSpacing: '1px',
-                marginBottom: '4px',
+                letterSpacing: '1.5px',
+                marginBottom: '5px',
               }}
             >
-              ✦ Guild / Department
+              ✦ Guild / Department Sector
             </label>
             <select
               value={department}
@@ -140,13 +154,15 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
               required
               style={{
                 width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#ffffff',
-                border: '1.5px solid #C5A059',
-                borderRadius: '6px',
-                color: '#2A2017',
-                fontSize: '0.95rem',
+                padding: '0.8rem 0.9rem',
+                backgroundColor: '#FFFDF7',
+                border: '1.5px solid #A88448',
+                borderRadius: '4px',
+                color: '#2C1E14',
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1rem',
                 boxSizing: 'border-box',
+                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
               }}
             >
               <option value="" disabled>Select Department Sector...</option>
@@ -162,14 +178,14 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
                 display: 'block',
                 fontSize: '0.75rem',
                 fontWeight: '700',
-                fontFamily: 'var(--font-mono)',
-                color: '#584937',
+                fontFamily: 'var(--font-display)',
+                color: '#422F1B',
                 textTransform: 'uppercase',
-                letterSpacing: '1px',
-                marginBottom: '4px',
+                letterSpacing: '1.5px',
+                marginBottom: '5px',
               }}
             >
-              ✦ Coordinates (Email)
+              ✦ Coordinates (Email Address)
             </label>
             <input
               type="email"
@@ -179,13 +195,15 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
               required
               style={{
                 width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#ffffff',
-                border: '1.5px solid #C5A059',
-                borderRadius: '6px',
-                color: '#2A2017',
-                fontSize: '0.95rem',
+                padding: '0.8rem 0.9rem',
+                backgroundColor: '#FFFDF7',
+                border: '1.5px solid #A88448',
+                borderRadius: '4px',
+                color: '#2C1E14',
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1rem',
                 boxSizing: 'border-box',
+                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
               }}
             />
           </div>
@@ -194,10 +212,10 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
             type="submit"
             className="simple-btn-primary gold-pulse"
             style={{
-              marginTop: '0.5rem',
+              marginTop: '0.6rem',
               width: '100%',
-              padding: '0.9rem',
-              fontSize: '1rem',
+              padding: '0.95rem',
+              fontSize: '0.95rem',
             }}
           >
             Mark the Map & Begin Expedition 🗺️

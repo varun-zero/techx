@@ -29,7 +29,7 @@ export default function RouteSelection() {
     >
       {/* Top Header Bar */}
       <div
-        className="simple-card"
+        className="simple-card vintage-border"
         style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -39,10 +39,10 @@ export default function RouteSelection() {
         }}
       >
         <div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: '600' }}>
-            Logged in as
+          <div style={{ fontSize: '0.7rem', color: '#652B19', textTransform: 'uppercase', fontWeight: '700', fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}>
+            📜 Explorer Logged In
           </div>
-          <div style={{ fontSize: '1.05rem', color: 'var(--foreground)', fontWeight: '700' }}>
+          <div style={{ fontSize: '1.15rem', color: '#2C1E14', fontWeight: '800', fontFamily: 'var(--font-display)' }}>
             {user?.name || 'Evaluator'}
           </div>
         </div>
@@ -51,45 +51,47 @@ export default function RouteSelection() {
             onClick={() => router.push('/leaderboard')}
             style={{
               padding: '8px 14px',
-              fontSize: '0.85rem',
-              backgroundColor: '#f1f5f9',
-              color: '#0f172a',
-              border: '1px solid var(--border-color)',
-              borderRadius: '6px',
-              fontWeight: '600',
+              fontSize: '0.8rem',
+              backgroundColor: '#F7EEDC',
+              color: '#2C1E14',
+              border: '1px solid #A88448',
+              borderRadius: '4px',
+              fontWeight: '700',
+              fontFamily: 'var(--font-display)',
               cursor: 'pointer',
             }}
           >
-            Leaderboard
+            🏆 Leaderboard
           </button>
           <button
             onClick={logout}
             style={{
-              backgroundColor: '#ef4444',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '6px',
+              backgroundColor: '#652B19',
+              color: '#FFFDF7',
+              border: '1px solid #8B1A1A',
+              borderRadius: '4px',
               padding: '8px 14px',
-              fontSize: '0.85rem',
-              fontWeight: '600',
+              fontSize: '0.8rem',
+              fontWeight: '700',
+              fontFamily: 'var(--font-display)',
               cursor: 'pointer',
             }}
           >
-            Logout
+            Exit
           </button>
         </div>
       </div>
 
       {/* Main Title & Progress */}
       <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-        <div style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
-          TechX Research Labs
+        <div style={{ fontSize: '0.75rem', color: '#D4AF37', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '2.5px', fontFamily: 'var(--font-mono)' }}>
+          ✦ ANCIENT EXPEDITION SECTORS ✦
         </div>
-        <h1 style={{ fontSize: '1.75rem', margin: '0.2rem 0 0.5rem', color: 'var(--foreground)' }}>
-          Select a Research Lab
+        <h1 style={{ fontSize: '2rem', margin: '0.25rem 0 0.5rem', color: '#F8F1E1', fontFamily: 'var(--font-title)', letterSpacing: '1.5px' }}>
+          Chart Your Next Lab Sector
         </h1>
-        <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', margin: 0 }}>
-          Choose a lab below to submit your product evaluation feedback.
+        <p style={{ fontSize: '1rem', color: '#BCA888', fontFamily: 'var(--font-serif)', fontStyle: 'italic', margin: 0 }}>
+          Select a research lab below to uncover relics & record your observations.
         </p>
 
         {/* Progress Card */}
@@ -97,31 +99,33 @@ export default function RouteSelection() {
           className="simple-card"
           style={{
             marginTop: '1.25rem',
-            padding: '1rem 1.25rem',
+            padding: '1.1rem 1.25rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
           }}
         >
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
-              Lab Completion Progress
+            <div style={{ fontSize: '0.7rem', color: '#652B19', fontWeight: '700', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}>
+              Expedition Completion Rate
             </div>
-            <div style={{ fontSize: '1rem', color: 'var(--foreground)', fontWeight: '700', marginTop: '2px' }}>
-              {completedCount} of {totalLabs} Labs Completed
+            <div style={{ fontSize: '1.1rem', color: '#2C1E14', fontWeight: '800', fontFamily: 'var(--font-display)', marginTop: '2px' }}>
+              {completedCount} of {totalLabs} Sectors Discovered
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '6px' }}>
+          <div style={{ display: 'flex', gap: '8px' }}>
             {Object.keys(expeditionLabs).map((labId) => {
               const done = isLabCompleted(labId, userEmail);
               return (
                 <span
                   key={labId}
                   style={{
-                    width: '12px',
-                    height: '12px',
+                    width: '14px',
+                    height: '14px',
                     borderRadius: '50%',
-                    backgroundColor: done ? '#22c55e' : '#cbd5e1',
+                    backgroundColor: done ? '#2E5D43' : '#C4B496',
+                    border: done ? '1.5px solid #1F3A2B' : '1px solid #8C785B',
+                    boxShadow: done ? '0 0 8px rgba(46,93,67,0.6)' : 'none',
                     display: 'inline-block',
                   }}
                 />
@@ -134,22 +138,22 @@ export default function RouteSelection() {
         {allLabsFinished && (
           <button
             onClick={() => router.push('/finish')}
-            className="simple-btn-primary"
+            className="simple-btn-primary gold-pulse"
             style={{
               marginTop: '1.25rem',
               width: '100%',
-              padding: '1rem',
+              padding: '1.1rem',
               fontSize: '1rem',
-              backgroundColor: '#16a34a',
+              backgroundColor: '#2E5D43',
             }}
           >
-            ✓ Complete Evaluation & View Certificate
+            🏆 Unearth Master Certificate & Claim Relics
           </button>
         )}
       </div>
 
       {/* Lab Selection Cards */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
         {Object.values(expeditionLabs).map((lab) => {
           const progress = getLabDiscoveryProgress(lab.sourceLab, userEmail);
           const finished = isLabCompleted(lab.sourceLab, userEmail);
@@ -160,43 +164,43 @@ export default function RouteSelection() {
               onClick={() => handleLabClick(lab.labId)}
               className="simple-card"
               style={{
-                borderColor: finished ? '#22c55e' : 'var(--border-color)',
-                padding: '1.25rem',
+                borderColor: finished ? '#2E5D43' : '#A88448',
+                padding: '1.25rem 1.4rem',
                 cursor: 'pointer',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+                transition: 'all 0.2s ease',
               }}
             >
               <div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--primary)', fontWeight: '700', textTransform: 'uppercase' }}>
+                <div style={{ fontSize: '0.7rem', color: '#652B19', fontWeight: '800', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}>
                   {lab.name}
                 </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--foreground)', marginTop: '2px' }}>
+                <div style={{ fontSize: '1.3rem', fontWeight: '800', color: '#2C1E14', fontFamily: 'var(--font-display)', marginTop: '2px' }}>
                   {lab.title}
                 </div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+                <div style={{ fontSize: '0.9rem', color: '#523D24', fontFamily: 'var(--font-serif)', fontStyle: 'italic', marginTop: '0.25rem' }}>
                   {lab.description}
                 </div>
               </div>
 
-              <div style={{ textAlign: 'right', minWidth: '110px' }}>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600' }}>
+              <div style={{ textAlign: 'right', minWidth: '115px' }}>
+                <div style={{ fontSize: '0.7rem', color: '#6B553B', fontWeight: '700', textTransform: 'uppercase' }}>
                   Evaluated
                 </div>
-                <div style={{ fontSize: '1.1rem', fontWeight: '700', color: finished ? '#22c55e' : 'var(--foreground)' }}>
+                <div style={{ fontSize: '1.15rem', fontWeight: '800', color: finished ? '#1F3A2B' : '#2C1E14', fontFamily: 'var(--font-display)' }}>
                   {progress.completed} / {progress.total}
                 </div>
                 <button
                   className="simple-btn-primary"
                   style={{
                     marginTop: '0.5rem',
-                    padding: '6px 14px',
-                    fontSize: '0.8rem',
+                    padding: '7px 14px',
+                    fontSize: '0.75rem',
                   }}
                 >
-                  {finished ? 'View Lab' : 'Enter Lab →'}
+                  {finished ? 'Inspect Map' : 'Enter Lab →'}
                 </button>
               </div>
             </div>

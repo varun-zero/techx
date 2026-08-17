@@ -116,29 +116,30 @@ export default function LabMapView({ labId }: LabMapViewProps) {
           position: 'sticky',
           top: 0,
           zIndex: 40,
-          backgroundColor: '#ffffff',
-          borderBottom: '1px solid var(--border-color)',
-          padding: '0.75rem 1.25rem',
+          backgroundColor: '#F3E5C8',
+          borderBottom: '2px solid #A88448',
+          padding: '0.85rem 1.25rem',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.6)',
+          backgroundImage: 'linear-gradient(135deg, #F5E8CE 0%, #E6D2AA 100%)',
         }}
       >
         <div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--primary)', fontWeight: '700', textTransform: 'uppercase' }}>
-            {labConfig.name}
+          <div style={{ fontSize: '0.7rem', color: '#652B19', fontWeight: '800', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}>
+            📜 {labConfig.name}
           </div>
-          <div style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--foreground)' }}>
+          <div style={{ fontSize: '1.25rem', fontWeight: '800', color: '#2C1E14', fontFamily: 'var(--font-display)', textShadow: '0 1px 0 rgba(255,255,255,0.4)' }}>
             {labConfig.title}
           </div>
         </div>
 
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '600' }}>
-            Evaluations Submitted
+          <div style={{ fontSize: '0.7rem', color: '#6B553B', fontWeight: '700', textTransform: 'uppercase' }}>
+            Relics Charted
           </div>
-          <div style={{ fontSize: '1.1rem', fontWeight: '700', color: completedCount === totalCount ? '#22c55e' : 'var(--foreground)' }}>
+          <div style={{ fontSize: '1.2rem', fontWeight: '800', color: completedCount === totalCount ? '#1F3A2B' : '#2C1E14', fontFamily: 'var(--font-display)' }}>
             {completedCount} / {totalCount}
           </div>
         </div>
@@ -154,10 +155,11 @@ export default function LabMapView({ labId }: LabMapViewProps) {
           margin: '0 auto',
           aspectRatio: '4 / 3',
           minHeight: '440px',
-          backgroundColor: '#f1f5f9',
+          backgroundColor: '#16120B',
           overflow: 'hidden',
-          border: '1px solid var(--border-color)',
+          border: '3px double #A88448',
           borderRadius: '8px',
+          boxShadow: '0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6)',
         }}
       >
         <ImageWithFallback
@@ -185,9 +187,9 @@ export default function LabMapView({ labId }: LabMapViewProps) {
             <motion.path
               d={svgPathD}
               fill="none"
-              stroke="#2563eb"
-              strokeWidth="1.2"
-              strokeDasharray="2 1"
+              stroke="#D4AF37"
+              strokeWidth="1.5"
+              strokeDasharray="3 1.5"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
@@ -217,22 +219,22 @@ export default function LabMapView({ labId }: LabMapViewProps) {
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setSelectedProduct(product)}
                 style={{
-                  width: '40px',
-                  height: '40px',
+                  width: '42px',
+                  height: '42px',
                   borderRadius: '50%',
-                  backgroundColor: isSubmitted ? '#22c55e' : '#ffffff',
-                  color: isSubmitted ? '#ffffff' : '#0f172a',
-                  border: `2px solid ${isSubmitted ? '#16a34a' : '#2563eb'}`,
+                  backgroundColor: isSubmitted ? '#1F3A2B' : '#F3E5C8',
+                  color: isSubmitted ? '#F3E5AB' : '#2C1E14',
+                  border: `2px solid ${isSubmitted ? '#D4AF37' : '#A88448'}`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.1rem',
+                  fontSize: '1.2rem',
                   cursor: 'pointer',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.6), 0 0 10px rgba(212,175,55,0.4)',
                   padding: 0,
                 }}
               >
-                {isSubmitted ? '✓' : product.icon}
+                {isSubmitted ? '📜' : product.icon}
               </motion.button>
               <div
                 style={{
@@ -242,15 +244,16 @@ export default function LabMapView({ labId }: LabMapViewProps) {
                   transform: 'translateX(-50%)',
                   whiteSpace: 'nowrap',
                   fontSize: '0.75rem',
-                  fontWeight: '600',
-                  color: isSubmitted ? '#166534' : '#0f172a',
-                  backgroundColor: '#ffffff',
+                  fontWeight: '700',
+                  fontFamily: 'var(--font-serif)',
+                  color: isSubmitted ? '#1F3A2B' : '#2C1E14',
+                  backgroundColor: '#F3E5C8',
                   padding: '3px 8px',
                   borderRadius: '4px',
-                  border: '1px solid var(--border-color)',
-                  marginTop: '3px',
+                  border: '1px solid #A88448',
+                  marginTop: '4px',
                   pointerEvents: 'none',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
                 }}
               >
                 {product.name}
@@ -266,33 +269,37 @@ export default function LabMapView({ labId }: LabMapViewProps) {
           position: 'sticky',
           bottom: 0,
           zIndex: 40,
-          backgroundColor: '#ffffff',
-          borderTop: '1px solid var(--border-color)',
-          padding: '0.75rem 1.25rem max(0.75rem, env(safe-area-inset-bottom))',
+          backgroundColor: '#F3E5C8',
+          borderTop: '2px solid #A88448',
+          padding: '0.85rem 1.25rem max(0.85rem, env(safe-area-inset-bottom))',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          backgroundImage: 'linear-gradient(135deg, #F5E8CE 0%, #E6D2AA 100%)',
+          boxShadow: '0 -4px 15px rgba(0,0,0,0.4)',
         }}
       >
         <button
           onClick={() => router.push('/labs')}
           style={{
-            backgroundColor: '#ffffff',
-            color: '#0f172a',
-            border: '1px solid var(--border-color)',
-            borderRadius: '6px',
+            backgroundColor: '#F7EEDC',
+            color: '#2C1E14',
+            border: '1px solid #A88448',
+            borderRadius: '4px',
             padding: '0.6rem 1.2rem',
             fontSize: '0.85rem',
-            fontWeight: '600',
+            fontWeight: '700',
+            fontFamily: 'var(--font-display)',
             cursor: 'pointer',
             minHeight: '40px',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
           }}
         >
-          ← Back to Labs
+          ← Return to Sectors Map
         </button>
 
-        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: '500' }}>
-          Click any product pin to evaluate 📝
+        <div style={{ fontSize: '0.9rem', color: '#652B19', fontWeight: '700', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
+          Select a relic pin to evaluate 🗺️
         </div>
       </div>
 
