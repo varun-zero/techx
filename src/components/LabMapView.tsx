@@ -116,30 +116,30 @@ export default function LabMapView({ labId }: LabMapViewProps) {
           position: 'sticky',
           top: 0,
           zIndex: 40,
-          backgroundColor: '#F3E5C8',
-          borderBottom: '2px solid #A88448',
+          backgroundColor: '#0D1520',
+          borderBottom: '1px solid rgba(212, 175, 55, 0.4)',
           padding: '0.85rem 1.25rem',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.6)',
-          backgroundImage: 'linear-gradient(135deg, #F5E8CE 0%, #E6D2AA 100%)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.8)',
+          backdropFilter: 'blur(8px)',
         }}
       >
         <div>
-          <div style={{ fontSize: '0.7rem', color: '#652B19', fontWeight: '800', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}>
-            📜 {labConfig.name}
+          <div style={{ fontSize: '0.7rem', color: '#D4AF37', fontWeight: '800', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '1.5px' }}>
+            🧭 SECTOR MAP // {labConfig.name}
           </div>
-          <div style={{ fontSize: '1.25rem', fontWeight: '800', color: '#2C1E14', fontFamily: 'var(--font-display)', textShadow: '0 1px 0 rgba(255,255,255,0.4)' }}>
+          <div style={{ fontSize: '1.25rem', fontWeight: '800', color: '#F8F1E1', fontFamily: 'var(--font-display)', textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
             {labConfig.title}
           </div>
         </div>
 
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: '0.7rem', color: '#6B553B', fontWeight: '700', textTransform: 'uppercase' }}>
-            Relics Charted
+          <div style={{ fontSize: '0.7rem', color: '#9E8B6B', fontWeight: '700', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>
+            RELICS CHARTED
           </div>
-          <div style={{ fontSize: '1.2rem', fontWeight: '800', color: completedCount === totalCount ? '#1F3A2B' : '#2C1E14', fontFamily: 'var(--font-display)' }}>
+          <div style={{ fontSize: '1.2rem', fontWeight: '800', color: completedCount === totalCount ? '#4ADE80' : '#D4AF37', fontFamily: 'var(--font-display)' }}>
             {completedCount} / {totalCount}
           </div>
         </div>
@@ -151,15 +151,15 @@ export default function LabMapView({ labId }: LabMapViewProps) {
           flex: 1,
           position: 'relative',
           width: '100%',
-          maxWidth: '640px',
+          maxWidth: '720px',
           margin: '0 auto',
           aspectRatio: '4 / 3',
-          minHeight: '440px',
-          backgroundColor: '#16120B',
+          minHeight: '460px',
+          backgroundColor: '#070C12',
           overflow: 'hidden',
-          border: '3px double #A88448',
-          borderRadius: '8px',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6)',
+          border: '1px solid rgba(212, 175, 55, 0.3)',
+          borderRadius: '10px',
+          boxShadow: '0 15px 40px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.8)',
         }}
       >
         <ImageWithFallback
@@ -167,7 +167,18 @@ export default function LabMapView({ labId }: LabMapViewProps) {
           alt={labConfig.title}
           fallbackTitle={`${labConfig.name} MAP`}
           fallbackIcon="🗺️"
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }}
+        />
+
+        {/* Dark Vignette Frame Overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            boxShadow: 'inset 0 0 50px rgba(0,0,0,0.6)',
+            zIndex: 5,
+          }}
         />
 
         {/* Golden SVG Route Lines Overlay */}
@@ -188,8 +199,8 @@ export default function LabMapView({ labId }: LabMapViewProps) {
               d={svgPathD}
               fill="none"
               stroke="#D4AF37"
-              strokeWidth="1.5"
-              strokeDasharray="3 1.5"
+              strokeWidth="1.8"
+              strokeDasharray="3 2"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
@@ -215,27 +226,31 @@ export default function LabMapView({ labId }: LabMapViewProps) {
               }}
             >
               <motion.button
-                whileHover={{ scale: 1.15 }}
+                whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setSelectedProduct(product)}
                 style={{
-                  width: '42px',
-                  height: '42px',
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '50%',
-                  backgroundColor: isSubmitted ? '#1F3A2B' : '#F3E5C8',
-                  color: isSubmitted ? '#F3E5AB' : '#2C1E14',
-                  border: `2px solid ${isSubmitted ? '#D4AF37' : '#A88448'}`,
+                  backgroundColor: isSubmitted ? 'rgba(31, 58, 43, 0.95)' : 'rgba(13, 21, 32, 0.9)',
+                  color: isSubmitted ? '#4ADE80' : '#D4AF37',
+                  border: `2px solid ${isSubmitted ? '#4ADE80' : '#D4AF37'}`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.2rem',
+                  fontSize: '1.1rem',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 10px rgba(0,0,0,0.6), 0 0 10px rgba(212,175,55,0.4)',
+                  boxShadow: isSubmitted 
+                    ? '0 0 15px rgba(74, 222, 128, 0.6), 0 4px 10px rgba(0,0,0,0.8)' 
+                    : '0 0 15px rgba(212, 175, 55, 0.5), 0 4px 10px rgba(0,0,0,0.8)',
+                  backdropFilter: 'blur(4px)',
                   padding: 0,
                 }}
               >
-                {isSubmitted ? '📜' : product.icon}
+                {isSubmitted ? '✓' : product.icon}
               </motion.button>
+
               <div
                 style={{
                   position: 'absolute',
@@ -243,17 +258,19 @@ export default function LabMapView({ labId }: LabMapViewProps) {
                   left: '50%',
                   transform: 'translateX(-50%)',
                   whiteSpace: 'nowrap',
-                  fontSize: '0.75rem',
+                  fontSize: '0.72rem',
                   fontWeight: '700',
-                  fontFamily: 'var(--font-serif)',
-                  color: isSubmitted ? '#1F3A2B' : '#2C1E14',
-                  backgroundColor: '#F3E5C8',
+                  fontFamily: 'var(--font-mono)',
+                  letterSpacing: '0.5px',
+                  color: isSubmitted ? '#86EFAC' : '#F3E5AB',
+                  backgroundColor: 'rgba(10, 16, 26, 0.88)',
                   padding: '3px 8px',
                   borderRadius: '4px',
-                  border: '1px solid #A88448',
-                  marginTop: '4px',
+                  border: `1px solid ${isSubmitted ? 'rgba(74, 222, 128, 0.4)' : 'rgba(212, 175, 55, 0.4)'}`,
+                  marginTop: '5px',
                   pointerEvents: 'none',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.7)',
+                  backdropFilter: 'blur(6px)',
                 }}
               >
                 {product.name}
@@ -269,22 +286,22 @@ export default function LabMapView({ labId }: LabMapViewProps) {
           position: 'sticky',
           bottom: 0,
           zIndex: 40,
-          backgroundColor: '#F3E5C8',
-          borderTop: '2px solid #A88448',
+          backgroundColor: '#0D1520',
+          borderTop: '1px solid rgba(212, 175, 55, 0.4)',
           padding: '0.85rem 1.25rem max(0.85rem, env(safe-area-inset-bottom))',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          backgroundImage: 'linear-gradient(135deg, #F5E8CE 0%, #E6D2AA 100%)',
-          boxShadow: '0 -4px 15px rgba(0,0,0,0.4)',
+          boxShadow: '0 -4px 20px rgba(0,0,0,0.8)',
+          backdropFilter: 'blur(8px)',
         }}
       >
         <button
           onClick={() => router.push('/labs')}
           style={{
-            backgroundColor: '#F7EEDC',
-            color: '#2C1E14',
-            border: '1px solid #A88448',
+            backgroundColor: 'rgba(212, 175, 55, 0.12)',
+            color: '#F3E5AB',
+            border: '1px solid #D4AF37',
             borderRadius: '4px',
             padding: '0.6rem 1.2rem',
             fontSize: '0.85rem',
@@ -292,14 +309,15 @@ export default function LabMapView({ labId }: LabMapViewProps) {
             fontFamily: 'var(--font-display)',
             cursor: 'pointer',
             minHeight: '40px',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
+            transition: 'all 0.2s ease',
           }}
         >
-          ← Return to Sectors Map
+          ← Sector Map
         </button>
 
-        <div style={{ fontSize: '0.9rem', color: '#652B19', fontWeight: '700', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
-          Select a relic pin to evaluate 🗺️
+        <div style={{ fontSize: '0.85rem', color: '#D4AF37', fontWeight: '600', fontFamily: 'var(--font-mono)' }}>
+          ✦ Select any pin to log telemetry ✦
         </div>
       </div>
 
