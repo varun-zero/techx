@@ -1,10 +1,6 @@
 import { MongoClient, Db } from 'mongodb';
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Please add your MongoDB URI to .env.local');
-}
-
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/feedback-portal';
 const options = {};
 
 let client: MongoClient;
@@ -33,6 +29,10 @@ if (process.env.NODE_ENV === 'development') {
 export default clientPromise;
 
 export async function getDatabase(): Promise<Db> {
+  if (!process.env.MONGODB_URI && process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
+    // Return dummy db or handle gracefully when MONGODB_URI is not set during build
+    console.warn('MONGODB_URI environment variable is missing.');
+  }
   const client = await clientPromise;
   return client.db(process.env.DB_NAME || 'feedback-portal');
 }

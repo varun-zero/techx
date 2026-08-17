@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from 'next/font/local';
+import { Inter } from 'next/font/google';
 import { UserProvider } from '@/context/UserContext';
 import { AchievementProvider } from '@/context/AchievementContext';
 import { CompletionProvider } from '@/context/CompletionContext';
@@ -9,16 +9,15 @@ import XpBar from '@/components/XpBar';
 import CompletionChecker from '@/components/CompletionChecker';
 import "./globals.css";
 
-// This path must be correct and relative to the 'app' directory
-const minecraftFont = localFont({
-  src: './fonts/Minecraft.ttf', 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
   display: 'swap',
-  variable: '--font-minecraft',
 });
 
 export const metadata: Metadata = {
-  title: "Product Feedback",
-  description: "A simplified feedback platform.",
+  title: "TechX Research Feedback Portal",
+  description: "Feedback collection platform for TechX research labs.",
 };
 
 export default function RootLayout({
@@ -27,16 +26,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${minecraftFont.variable} font-minecraft`}>
+    <html lang="en" className={inter.variable}>
       <body>
         <AdminProvider>
           <AchievementProvider>
             <UserProvider>
-            <CompletionProvider>
-              {children}
-              <XpBar />
-              <CompletionChecker />
-            </CompletionProvider>
+              <CompletionProvider>
+                {children}
+                <XpBar />
+                <CompletionChecker />
+              </CompletionProvider>
             </UserProvider>
             <AchievementManager />
           </AchievementProvider>
