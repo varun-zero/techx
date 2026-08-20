@@ -1,17 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { useUser } from '@/context/UserContext';
-import { useAchievement } from '@/context/AchievementContext';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { CheckpointNode } from '@/lib/expeditionData';
 
 interface ProductObservationModalProps {
-  product: {
-    id: string;
-    name: string;
-    icon: string;
-    description?: string;
-  };
+  product: CheckpointNode;
   isSubmitted: boolean;
   onClose: () => void;
   onSuccess: () => void;
@@ -23,254 +17,151 @@ export default function ProductObservationModal({
   onClose,
   onSuccess,
 }: ProductObservationModalProps) {
-  const { user } = useUser();
-  const { addAchievement } = useAchievement();
-
-  const [rating, setRating] = useState<number>(0);
-  const [comment, setComment] = useState<string>('');
+  const [rating, setRating] = useState<number>(isSubmitted ? 5 : 0);
+  const [hoverRating, setHoverRating] = useState<number>(0);
+  const [feedback, setFeedback] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!user) {
-      alert('User information not found. Please log in again.');
-      return;
-    }
-
-    if (rating === 0) {
-      alert('A star rating is required to record field observation!');
-      return;
-    }
+    if (rating === 0) return;
 
     setIsSubmitting(true);
-
-    try {
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          studentName: user.name,
-          studentEmail: user.email,
-          studentDepartment: user.department,
-          rating,
-          comment,
-          tableId: product.id,
-          timestamp: new Date().toISOString(),
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit field observation');
-      }
-
-      const userStorageKey = `submittedFeedback_${user.email}`;
-      const submitted = JSON.parse(localStorage.getItem(userStorageKey) || '[]');
-
-      if (!submitted.includes(product.id)) {
-        submitted.push(product.id);
-        localStorage.setItem(userStorageKey, JSON.stringify(submitted));
-
-        if (submitted.length >= 25) {
-          localStorage.setItem(`completion_${user.email}`, 'true');
-          localStorage.setItem('completion_state', 'true');
-        }
-
-        window.dispatchEvent(
-          new CustomEvent('feedbackSubmitted', {
-            detail: { completed: submitted.length >= 25 },
-          })
-        );
-      }
-
-      try {
-        const sound = new Audio('/sounds/achievement.mp3');
-        sound.play().catch(() => {});
-      } catch {}
-
-      addAchievement({
-        title: 'Discovery Recorded!',
-        subtitle: product.name,
-        imageUrl: '/images/image.png',
-      });
-
-      onSuccess();
-    } catch (err) {
-      console.error('Submission Error:', err);
-      alert('🔥 Submission error! Please try again.');
-    } finally {
+    setTimeout(() => {
       setIsSubmitting(false);
-    }
+      onSuccess();
+    }, 400);
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 999,
-        backgroundColor: 'rgba(10, 8, 6, 0.88)',
-        backdropFilter: 'blur(6px)',
-        display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-        padding: '0',
-      }}
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-sm select-none">
       <motion.div
-        initial={{ y: '100%' }}
-        animate={{ y: 0 }}
-        exit={{ y: '100%' }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        onClick={(e) => e.stopPropagation()}
-        className="simple-card"
-        style={{
-          width: '100%',
-          maxWidth: '540px',
-          maxHeight: '90vh',
-          overflowY: 'auto',
-          borderTopLeftRadius: '16px',
-          borderTopRightRadius: '16px',
-          padding: '1.5rem',
-          paddingBottom: 'max(1.75rem, env(safe-area-inset-bottom))',
-          boxSizing: 'border-box',
-        }}
+        initial={{ scale: 0.95, opacity: 0, y: 15 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.95, opacity: 0, y: 15 }}
+        transition={{ duration: 0.2 }}
+        style={{ backgroundImage: `url('/assets/images/review-card.png')` }}
+        className="relative w-full max-w-[470px] aspect-[4/5] bg-[length:100%_100%] bg-no-repeat bg-center drop-shadow-[0_25px_60px_rgba(0,0,0,0.98)] pt-28 sm:pt-32 pb-8 px-10 sm:px-14 text-[#241308] flex flex-col justify-between overflow-hidden"
       >
-        {/* Header Bar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <div>
-            <span style={{ fontSize: '0.75rem', color: 'var(--primary)', fontWeight: '700', textTransform: 'uppercase' }}>
-              Product Feedback Evaluation
-            </span>
-            <h2 style={{ fontSize: '1.25rem', color: 'var(--foreground)', margin: 0, fontWeight: '700' }}>
-              {product.name}
-            </h2>
-          </div>
-          <button
-            onClick={onClose}
-            style={{
-              backgroundColor: '#f1f5f9',
-              color: '#0f172a',
-              border: '1px solid var(--border-color)',
-              borderRadius: '50%',
-              width: '32px',
-              height: '32px',
-              fontSize: '1rem',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Product Details Banner */}
-        <div
-          style={{
-            backgroundColor: '#f8fafc',
-            color: 'var(--foreground)',
-            padding: '0.9rem 1rem',
-            borderRadius: '8px',
-            marginBottom: '1.25rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.85rem',
-            border: '1px solid var(--border-color)',
-          }}
+        {/* Brass Close Button */}
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close dossier"
+          className="absolute top-7 right-8 sm:top-8 sm:right-10 w-7 h-7 rounded-full border border-[#5c3e21]/50 bg-[#dfcaa7] hover:bg-[#d4af37] text-[#241308] flex items-center justify-center font-bold text-xs transition active:scale-95 cursor-pointer z-20 shadow-md"
         >
-          <span style={{ fontSize: '2rem' }}>{product.icon}</span>
-          <div>
-            <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-              {product.description || 'TechX product evaluation checkpoint.'}
-            </div>
+          ✕
+        </button>
+
+        {/* 1. Header (Inside Parchment Safe Zone) */}
+        <div className="border-b border-[#5c3e21]/25 pb-2 mb-2 pr-6">
+          <div className="flex items-center justify-between">
+            <span className="block text-[9px] font-bold uppercase tracking-[0.2em] text-[#7a481c] font-['Cinzel',_serif]">
+              Recon Dossier // Observation
+            </span>
             {isSubmitted && (
-              <span
-                style={{
-                  display: 'inline-block',
-                  marginTop: '0.25rem',
-                  fontSize: '0.75rem',
-                  color: '#166534',
-                  fontWeight: '600',
-                }}
-              >
-                Feedback Previously Submitted ✓
+              <span className="rotate-[-3deg] border border-[#7a1c14] px-1.5 py-0.5 rounded-sm bg-[#7a1c14]/10 text-[#7a1c14] font-mono font-bold text-[9px] tracking-wider uppercase">
+                LOGGED ✓
               </span>
             )}
           </div>
+
+          <h2 className="text-base sm:text-lg font-black text-[#241308] font-['EB_Garamond',_serif] tracking-tight leading-snug mt-0.5">
+            {product.name}
+          </h2>
         </div>
 
-        {/* Feedback Form */}
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {/* 2. Direct Field Notes */}
+        <div className="mb-2 pl-3 border-l-2 border-[#7a481c]/50">
+          <p className="text-xs sm:text-sm text-[#3d200e] font-[family-name:var(--font-handwriting)] font-semibold leading-relaxed">
+            &quot;{product.description}&quot;
+          </p>
+        </div>
+
+        {/* 3. Feedback Form */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 flex-1 justify-end">
+
+          {/* Avery Pirate Coin Rating */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: 'var(--foreground)', marginBottom: '0.4rem' }}>
-              Star Rating (Required):
-            </label>
-            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', padding: '0.25rem 0' }}>
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  type="button"
-                  onClick={() => setRating(star)}
-                  style={{
-                    fontSize: '2rem',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    transform: rating >= star ? 'scale(1.15)' : 'scale(1)',
-                    transition: 'transform 0.15s',
-                    padding: '2px',
-                    color: rating >= star ? '#eab308' : '#cbd5e1',
-                  }}
-                >
-                  ★
-                </button>
-              ))}
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-[10px] font-bold uppercase tracking-[0.15em] text-[#5c3e21] font-['Cinzel',_serif]">
+                Sector Reliability <span className="text-[#8B1A1A] font-black">*</span>
+              </label>
+
+              <span className="text-[10px] font-mono font-bold text-[#7a481c]">
+                {rating > 0 ? `${rating} / 5 Coins` : 'Select'}
+              </span>
+            </div>
+
+            {/* Recessed Leather Coin Well */}
+            <div className="flex items-center justify-between px-3 py-1.5 rounded bg-[#241308]/10 border border-[#7a481c]/25 shadow-inner">
+              {[1, 2, 3, 4, 5].map((coinIndex) => {
+                const filled = coinIndex <= (hoverRating || rating);
+                return (
+                  <button
+                    key={coinIndex}
+                    type="button"
+                    onClick={() => setRating(coinIndex)}
+                    onMouseEnter={() => setHoverRating(coinIndex)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    className="group relative transition-transform duration-150 hover:scale-115 active:scale-95 focus:outline-none cursor-pointer p-0.5"
+                  >
+                    {filled && (
+                      <span className="absolute inset-0 rounded-full bg-amber-400/25 blur-sm pointer-events-none" />
+                    )}
+
+                    <img
+                      src="/assets/images/avery-pirate-coin.png"
+                      alt={`Rating Coin ${coinIndex}`}
+                      className={`relative w-7 h-7 sm:w-8 sm:h-8 object-contain transition-all duration-150 ${filled
+                          ? 'opacity-100 drop-shadow-[0_2px_6px_rgba(212,175,55,0.7)] brightness-110 contrast-110 scale-105'
+                          : 'opacity-30 grayscale brightness-50 contrast-90 group-hover:opacity-75 group-hover:grayscale-0'
+                        }`}
+                    />
+                  </button>
+                );
+              })}
             </div>
           </div>
 
+          {/* Surveyor Observations Textarea */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: 'var(--foreground)', marginBottom: '0.3rem' }}>
-              Comments / Detailed Feedback:
+            <label className="block text-[10px] font-bold uppercase tracking-[0.15em] text-[#5c3e21] font-['Cinzel',_serif] mb-1">
+              Surveyor Notes & Impressions
             </label>
+
             <textarea
-              rows={3}
-              placeholder="Share your thoughts, suggestions, or impressions..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#ffffff',
-                border: '1px solid var(--border-color)',
-                borderRadius: '8px',
-                color: 'var(--foreground)',
-                fontSize: '0.95rem',
-                boxSizing: 'border-box',
-              }}
+              rows={2}
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              placeholder="Inscribe telemetry findings or impressions..."
+              className="w-full p-2 rounded bg-[#f5ecdc]/90 text-[#241308] placeholder-[#7a5214]/60 text-sm font-[family-name:var(--font-handwriting)] font-semibold focus:outline-none focus:ring-1 focus:ring-[#7a481c] resize-none shadow-inner border border-[#7a481c]/35 leading-snug"
             />
           </div>
 
+          {/* Action Plaque Button */}
           <button
             type="submit"
-            disabled={isSubmitting}
-            className="simple-btn-primary"
+            disabled={rating === 0 || isSubmitting}
             style={{
-              width: '100%',
-              padding: '0.85rem',
-              fontSize: '1rem',
+              clipPath: 'polygon(6px 0%, calc(100% - 6px) 0%, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0% calc(100% - 6px), 0% 6px)',
             }}
+            className={`w-full py-2.5 px-4 font-bold text-xs uppercase tracking-widest transition flex items-center justify-center gap-2 font-['Cinzel',_serif] shadow-md touch-manipulation cursor-pointer border-t border-[#f5e19f]/50 ${rating > 0 && !isSubmitting
+                ? 'bg-gradient-to-b from-[#bfa15f] via-[#947432] to-[#634918] text-[#140802] hover:brightness-110 active:scale-[0.98]'
+                : 'bg-[#5c3e21]/40 text-[#241308]/40 cursor-not-allowed'
+              }`}
           >
-            {isSubmitting ? 'Submitting Feedback...' : 'Submit Feedback'}
+            {isSubmitting ? (
+              <span>Inking Observations...</span>
+            ) : (
+              <>
+                <span>{isSubmitted ? 'Update Checkpoint Notes' : 'Seal & Submit Observations'}</span>
+                <span>➔</span>
+              </>
+            )}
           </button>
         </form>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
-

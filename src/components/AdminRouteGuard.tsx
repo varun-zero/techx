@@ -22,33 +22,11 @@ export default function AdminRouteGuard({ children }: AdminRouteGuardProps) {
   // Show loading while checking authentication
   if (isLoading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh',
-        fontFamily: 'var(--font-minecraft)',
-        color: 'white',
-        backgroundColor: '#1e3c72'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Checking admin access...</p>
-          <div style={{ 
-            width: '40px', 
-            height: '40px', 
-            border: '4px solid #333', 
-            borderTop: '4px solid #FFD700', 
-            borderRadius: '50%', 
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto'
-          }}></div>
+      <div className="flex justify-center items-center min-h-screen font-courier text-uc-cream bg-uc-navy">
+        <div className="text-center">
+          <p className="text-lg mb-4 text-uc-gold font-bold">Verifying expedition clearance...</p>
+          <div className="w-10 h-10 border-4 border-stone-800 border-t-uc-gold rounded-full animate-spin mx-auto" />
         </div>
-        <style jsx>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}</style>
       </div>
     );
   }
@@ -56,16 +34,8 @@ export default function AdminRouteGuard({ children }: AdminRouteGuardProps) {
   // If not admin, show redirecting message
   if (!isAdmin) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh',
-        fontFamily: 'var(--font-minecraft)',
-        color: 'white',
-        backgroundColor: '#1e3c72'
-      }}>
-        <p>Redirecting to admin login...</p>
+      <div className="flex justify-center items-center min-h-screen font-courier text-uc-cream bg-uc-navy">
+        <p className="text-stone-300">Redirecting to administrator checkpoint...</p>
       </div>
     );
   }

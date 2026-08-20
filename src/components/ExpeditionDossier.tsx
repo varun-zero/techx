@@ -30,86 +30,29 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
   };
 
   return (
-    <div
-      style={{
-        maxWidth: '460px',
-        margin: '0 auto',
-        padding: '1.5rem 1rem',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        boxSizing: 'border-box',
-      }}
-    >
-      <div
-        className="simple-card vintage-border"
-        style={{
-          padding: '2.25rem 1.75rem',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
+    <div className="max-w-[460px] mx-auto py-6 px-4 min-h-screen flex flex-col justify-center box-border">
+      <div className="simple-card vintage-border py-9 px-7 relative overflow-hidden bg-uc-parchment border-[1.5px] border-[#8C6F42] rounded shadow-[0_10px_28px_rgba(0,0,0,0.5)]">
         {/* Corner Embellishments */}
-        <div style={{ position: 'absolute', top: '8px', left: '10px', fontSize: '0.8rem', color: '#A88448', pointerEvents: 'none' }}>✦</div>
-        <div style={{ position: 'absolute', top: '8px', right: '10px', fontSize: '0.8rem', color: '#A88448', pointerEvents: 'none' }}>✦</div>
-        <div style={{ position: 'absolute', bottom: '8px', left: '10px', fontSize: '0.8rem', color: '#A88448', pointerEvents: 'none' }}>✦</div>
-        <div style={{ position: 'absolute', bottom: '8px', right: '10px', fontSize: '0.8rem', color: '#A88448', pointerEvents: 'none' }}>✦</div>
+        <div className="absolute top-2 left-2.5 text-xs text-[#A88448] pointer-events-none select-none">✦</div>
+        <div className="absolute top-2 right-2.5 text-xs text-[#A88448] pointer-events-none select-none">✦</div>
+        <div className="absolute bottom-2 left-2.5 text-xs text-[#A88448] pointer-events-none select-none">✦</div>
+        <div className="absolute bottom-2 right-2.5 text-xs text-[#A88448] pointer-events-none select-none">✦</div>
 
-        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
-          <div
-            style={{
-              fontSize: '0.75rem',
-              letterSpacing: '3px',
-              color: '#652B19',
-              fontWeight: '700',
-              fontFamily: 'var(--font-mono)',
-              textTransform: 'uppercase',
-              marginBottom: '0.35rem',
-            }}
-          >
-            🧭 EXPEDITION LOG DOSSIER • N° 1897
+        <div className="text-center mb-7">
+          <div className="text-xs tracking-[3px] text-uc-rust font-bold font-mono uppercase mb-1.5">
+            EXPEDITION LOG DOSSIER • N° 1897
           </div>
-          <h1
-            style={{
-              fontSize: '2rem',
-              color: '#2C1E14',
-              margin: '0.2rem 0 0.5rem',
-              fontFamily: 'var(--font-title)',
-              letterSpacing: '1.5px',
-              textShadow: '0 1px 1px rgba(255,255,255,0.6)',
-            }}
-          >
+          <h1 className="text-3xl sm:text-4xl text-[#2C1E14] my-1 font-uncharted tracking-[1.5px] drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
             Register Your Alias
           </h1>
-          <p
-            style={{
-              fontSize: '0.95rem',
-              color: '#523D24',
-              fontFamily: 'var(--font-serif)',
-              fontStyle: 'italic',
-              margin: 0,
-              lineHeight: '1.4',
-            }}
-          >
+          <p className="text-sm text-[#523D24] font-serif italic m-0 leading-relaxed">
             &quot;Every lost treasure requires a map. Yours begins here — log your credentials to chart the uncharted.&quot;
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label
-              style={{
-                display: 'block',
-                fontSize: '0.75rem',
-                fontWeight: '700',
-                fontFamily: 'var(--font-display)',
-                color: '#422F1B',
-                textTransform: 'uppercase',
-                letterSpacing: '1.5px',
-                marginBottom: '5px',
-              }}
-            >
+            <label className="block text-xs font-bold font-uncharted text-[#422F1B] uppercase tracking-[1.5px] mb-1.5">
               ✦ Explorer Alias (Full Name)
             </label>
             <input
@@ -118,52 +61,19 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              style={{
-                width: '100%',
-                padding: '0.8rem 0.9rem',
-                backgroundColor: '#FFFDF7',
-                border: '1.5px solid #A88448',
-                borderRadius: '4px',
-                color: '#2C1E14',
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1rem',
-                boxSizing: 'border-box',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
-              }}
+              className="w-full py-3 px-3.5 bg-[#FFFDF7] border-[1.5px] border-[#A88448] rounded text-[#2C1E14] font-serif text-base box-border shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] focus:outline-none focus:border-uc-gold transition-colors"
             />
           </div>
 
           <div>
-            <label
-              style={{
-                display: 'block',
-                fontSize: '0.75rem',
-                fontWeight: '700',
-                fontFamily: 'var(--font-display)',
-                color: '#422F1B',
-                textTransform: 'uppercase',
-                letterSpacing: '1.5px',
-                marginBottom: '5px',
-              }}
-            >
+            <label className="block text-xs font-bold font-uncharted text-[#422F1B] uppercase tracking-[1.5px] mb-1.5">
               ✦ Guild / Department Sector
             </label>
             <select
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
               required
-              style={{
-                width: '100%',
-                padding: '0.8rem 0.9rem',
-                backgroundColor: '#FFFDF7',
-                border: '1.5px solid #A88448',
-                borderRadius: '4px',
-                color: '#2C1E14',
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1rem',
-                boxSizing: 'border-box',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
-              }}
+              className="w-full py-3 px-3.5 bg-[#FFFDF7] border-[1.5px] border-[#A88448] rounded text-[#2C1E14] font-serif text-base box-border shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] focus:outline-none focus:border-uc-gold transition-colors cursor-pointer"
             >
               <option value="" disabled>Select Department Sector...</option>
               {departmentOptions.map((dept) => (
@@ -173,18 +83,7 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
           </div>
 
           <div>
-            <label
-              style={{
-                display: 'block',
-                fontSize: '0.75rem',
-                fontWeight: '700',
-                fontFamily: 'var(--font-display)',
-                color: '#422F1B',
-                textTransform: 'uppercase',
-                letterSpacing: '1.5px',
-                marginBottom: '5px',
-              }}
-            >
+            <label className="block text-xs font-bold font-uncharted text-[#422F1B] uppercase tracking-[1.5px] mb-1.5">
               ✦ Coordinates (Email Address)
             </label>
             <input
@@ -193,36 +92,18 @@ export default function ExpeditionDossier({ onSuccess }: ExpeditionDossierProps)
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              style={{
-                width: '100%',
-                padding: '0.8rem 0.9rem',
-                backgroundColor: '#FFFDF7',
-                border: '1.5px solid #A88448',
-                borderRadius: '4px',
-                color: '#2C1E14',
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1rem',
-                boxSizing: 'border-box',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
-              }}
+              className="w-full py-3 px-3.5 bg-[#FFFDF7] border-[1.5px] border-[#A88448] rounded text-[#2C1E14] font-serif text-base box-border shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] focus:outline-none focus:border-uc-gold transition-colors"
             />
           </div>
 
           <button
             type="submit"
-            className="simple-btn-primary gold-pulse"
-            style={{
-              marginTop: '0.6rem',
-              width: '100%',
-              padding: '0.95rem',
-              fontSize: '0.95rem',
-            }}
+            className="simple-btn-primary gold-pulse mt-2.5 w-full py-3.5 px-4 text-base font-bold uppercase tracking-wider rounded cursor-pointer touch-manipulation transition-transform active:scale-[0.99]"
           >
-            Mark the Map & Begin Expedition 🗺️
+            Mark the Map & Begin Expedition ➔
           </button>
         </form>
       </div>
     </div>
   );
 }
-

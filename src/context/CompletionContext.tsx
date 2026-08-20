@@ -18,9 +18,9 @@ export function CompletionProvider({ children }: { children: ReactNode }) {
   const checkCompletion = useCallback(() => {
     if (!user) return false;
     
-    const userStorageKey = `submittedFeedback_${user.email}`;
-    const storedSubmissions = JSON.parse(localStorage.getItem(userStorageKey) || '[]');
-    const TOTAL_PRODUCTS = 25;
+    const userStorageKey = `feedback_submitted_${user.email}`;
+    const storedSubmissions = JSON.parse(localStorage.getItem(userStorageKey) || localStorage.getItem(`submittedFeedback_${user.email}`) || '[]');
+    const TOTAL_PRODUCTS = 15;
     
     return storedSubmissions.length >= TOTAL_PRODUCTS;
   }, [user]);

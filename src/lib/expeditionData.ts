@@ -1,130 +1,311 @@
-export interface CheckpointCoord {
-  x: number; // percentage 0 - 100
-  y: number; // percentage 0 - 100
+export interface CheckpointNode {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  x: number; // Percentage from left (0 - 100)
+  y: number; // Percentage from top (0 - 100)
 }
 
-export interface ExpeditionLabConfig {
-  labId: string;
-  sourceLab: string;
+export interface ExpeditionLab {
+  id: string;
+  labId?: string;
+  sourceLab?: string;
+  chapterNumber: string;
   name: string;
   title: string;
-  description: string;
-  mapImage: string;
-  labImage: string;
-  fragmentId: number;
-  fragmentName: string;
-  fragmentImage: string;
-  checkpoints: Record<string, CheckpointCoord>;
+  subtitle: string;
+  badgeTitle: string;
+  fragmentId?: string;
+  fragmentName?: string;
+  fragmentImage?: string;
+  checkpoints: CheckpointNode[];
 }
 
-export const expeditionLabs: Record<string, ExpeditionLabConfig> = {
-  a: {
-    labId: 'a',
-    sourceLab: 'a',
-    name: 'CHAPTER 01',
-    title: "KING'S BAY",
-    description: 'Uncover lost technological blueprints, wireless relays, and early hardware prototypes.',
-    mapImage: '/assets/uncharted/world-map.jpg',
-    labImage: '/assets/uncharted/world-map.jpg',
-    fragmentId: 1,
-    fragmentName: "FRAGMENT I — KING'S BAY MAP",
-    fragmentImage: '/assets/uncharted/world-map.jpg',
-    checkpoints: {
-      a1: { x: 25.0, y: 38.0 }, // Trueconnect.jio (Americas North)
-      a2: { x: 34.0, y: 62.0 }, // Drone (Americas South)
-      a3: { x: 60.0, y: 32.0 }, // Samsung Ecosystem (Europe)
-      a4: { x: 64.0, y: 48.0 }, // IP CAMERA (Africa)
-      a5: { x: 78.0, y: 44.0 }, // 100 Billion Tech (India/Asia)
-      a6: { x: 88.0, y: 52.0 }, // VSCode (East Asia / Japan)
-      a7: { x: 50.0, y: 80.0 }, // Temperature Calibrator (South Compass)
-    },
+export type ExpeditionLabConfig = ExpeditionLab;
+
+export const comicAssets: Record<string, string> = {
+  sky: '/assets/images/world-map.jpg',
+  plane: '/assets/images/expedition_map_bg.jpg',
+  jump: '/assets/images/sector-01-voyage.png',
+  fall: '/assets/images/journal-spread.png',
+  compass: '/assets/images/avery-pirate-coin.png',
+  mapFragment: '/assets/images/expedition_status_bg.png',
+};
+
+export interface LabDiscoveryProgress {
+  completed: number;
+  total: number;
+  isComplete: boolean;
+  isCompleted: boolean;
+  percentage: number;
+  doneCount: number;
+}
+
+// 1. Primary Base Labs (Strictly 3 Sectors)
+const baseExpeditionLabs: Record<string, ExpeditionLab> = {
+  '1': {
+    id: '1',
+    labId: '1',
+    sourceLab: '1',
+    chapterNumber: 'Chapter I',
+    name: 'Sector 01',
+    title: 'Portolan Maritime Route',
+    subtitle: 'Uncover lost technological blueprints, wireless relays, and early hardware prototypes.',
+    badgeTitle: 'Portolan Route Mastered',
+    fragmentId: '1',
+    fragmentName: 'Avery Pirate Seal',
+    fragmentImage: '/assets/images/avery-pirate-coin.png',
+    checkpoints: [
+      {
+        id: 'c1-p1',
+        name: 'Port of Departure (Hispania)',
+        description: 'Initial expedition staging post and wireless telemetry beacon verification.',
+        icon: '⛵',
+        x: 50,
+        y: 26,
+      },
+      {
+        id: 'c1-p2',
+        name: 'Azores Navigation Shoals',
+        description: 'Mid-Atlantic ocean currents calibration and compass alignment check.',
+        icon: '🧭',
+        x: 77,
+        y: 38,
+      },
+      {
+        id: 'c1-p3',
+        name: 'Sargasso Dead Calm Reach',
+        description: 'High-resistance maritime testing grounds under variable signal drift.',
+        icon: '⚓',
+        x: 33,
+        y: 45,
+      },
+      {
+        id: 'c1-p4',
+        name: 'Caribbean Passage Waypoint',
+        description: 'Tropical thermal management logging and battery endurance checks.',
+        icon: '🗺️',
+        x: 48,
+        y: 52,
+      },
+      {
+        id: 'c1-p5',
+        name: 'Cape Horn Observation Post',
+        description: 'Sub-polar telemetry relay and final passage clearance survey.',
+        icon: '🏔️',
+        x: 50,
+        y: 87,
+      },
+    ],
   },
-  c: {
-    labId: 'c',
-    sourceLab: 'c',
-    name: 'CHAPTER 02',
-    title: 'LIBERTALIA',
-    description: 'Explore ongoing hardware inventions, IoT telemetry, and smart home ecosystems.',
-    mapImage: '/assets/uncharted/world-map.jpg',
-    labImage: '/assets/uncharted/world-map.jpg',
-    fragmentId: 2,
-    fragmentName: 'FRAGMENT II — LIBERTALIA SEAL',
-    fragmentImage: '/assets/uncharted/world-map.jpg',
-    checkpoints: {
-      c1: { x: 22.0, y: 32.0 }, // SimilaCure
-      c2: { x: 30.0, y: 55.0 }, // Allotrak
-      c3: { x: 42.0, y: 42.0 }, // Reliance Samarth
-      c4: { x: 58.0, y: 30.0 }, // Video Door Phone
-      c5: { x: 65.0, y: 52.0 }, // Motherboard Full Setup Raw - 1
-      c6: { x: 76.0, y: 38.0 }, // Dial Club
-      c7: { x: 84.0, y: 58.0 }, // The Hobby Tribe
-      c8: { x: 50.0, y: 78.0 }, // Copilot
-      c9: { x: 70.0, y: 70.0 }, // IOT Monitoring
-    },
+  '2': {
+    id: '2',
+    labId: '2',
+    sourceLab: '2',
+    chapterNumber: 'Chapter II',
+    name: 'Sector 02',
+    title: 'Libertalia Pirate Haven',
+    subtitle: 'Investigate lost pirate coves, IoT telemetry matrices, and automated defenses.',
+    badgeTitle: 'Libertalia Explorer',
+    fragmentId: '2',
+    fragmentName: 'Magellan Cross Key',
+    fragmentImage: '/assets/images/avery-pirate-coin.png',
+    checkpoints: [
+      {
+        id: 'c2-p1',
+        name: "Smuggler's Outer Atoll",
+        description: 'Perimeter acoustic radar detection and barrier sonar verification.',
+        icon: '🏝️',
+        x: 35,
+        y: 22,
+      },
+      {
+        id: 'c2-p2',
+        name: "Founder's Hidden Grotto",
+        description: 'Subterranean signal relay alignment through dense stone acoustics.',
+        icon: '🗝️',
+        x: 72,
+        y: 34,
+      },
+      {
+        id: 'c2-p3',
+        name: 'Quarantine Watchtower',
+        description: 'Automated optical sensor diagnostics and night-vision telemetry.',
+        icon: '🔭',
+        x: 52,
+        y: 49,
+      },
+      {
+        id: 'c2-p4',
+        name: 'Pirate Treasury Vault',
+        description: 'Encrypted storage node access and biometric latency benchmark.',
+        icon: '🪙',
+        x: 30,
+        y: 68,
+      },
+      {
+        id: 'c2-p5',
+        name: 'Avery Grand Amphitheater',
+        description: 'Central acoustic chamber and multi-node network synchronization.',
+        icon: '🏛️',
+        x: 65,
+        y: 84,
+      },
+    ],
   },
-  d: {
-    labId: 'd',
-    sourceLab: 'd',
-    name: 'CHAPTER 03',
-    title: 'NEW DEVON',
-    description: 'Venture deep into high-security AI algorithms, neural tools, and experimental software.',
-    mapImage: '/assets/uncharted/world-map.jpg',
-    labImage: '/assets/uncharted/world-map.jpg',
-    fragmentId: 3,
-    fragmentName: 'FRAGMENT III — NEW DEVON KEYSTONE',
-    fragmentImage: '/assets/uncharted/world-map.jpg',
-    checkpoints: {
-      d1: { x: 20.0, y: 28.0 }, // DND Services
-      d2: { x: 32.0, y: 48.0 }, // Her Circle
-      d3: { x: 40.0, y: 65.0 }, // Optimyz
-      d4: { x: 58.0, y: 28.0 }, // RDiscovery
-      d5: { x: 64.0, y: 48.0 }, // PaperPal
-      d6: { x: 76.0, y: 36.0 }, // MDVR Camera Shivsahi
-      d7: { x: 82.0, y: 55.0 }, // Motherboard Full Setup Raw - 2
-      d8: { x: 88.0, y: 72.0 }, // OSM
-      d9: { x: 50.0, y: 82.0 }, // Apple Ecosystem
-      d10: { x: 68.0, y: 75.0 }, // EDQuest
-    },
+  '3': {
+    id: '3',
+    labId: '3',
+    sourceLab: '3',
+    chapterNumber: 'Chapter III',
+    name: 'Sector 03',
+    title: "King's Bay Anchorage",
+    subtitle: 'Survey deep-sea abyssal trenches, submerged ruins, and final beacon clusters.',
+    badgeTitle: 'Master Navigator',
+    fragmentId: '3',
+    fragmentName: 'King’s Astrolabe Crest',
+    fragmentImage: '/assets/images/avery-pirate-coin.png',
+    checkpoints: [
+      {
+        id: 'c3-p1',
+        name: 'Abyssal Trench Entry',
+        description: 'Pressure hull telemetry calibration at extreme oceanic depth.',
+        icon: '🌊',
+        x: 44,
+        y: 20,
+      },
+      {
+        id: 'c3-p2',
+        name: 'Sunken Galleon Graveyard',
+        description: 'Hydrophone sweep and submerged wreckage mapping logs.',
+        icon: '🚢',
+        x: 75,
+        y: 42,
+      },
+      {
+        id: 'c3-p3',
+        name: 'Hydrothermal Vent Matrix',
+        description: 'Geothermal sensor array monitoring and extreme temperature dissipation.',
+        icon: '🌋',
+        x: 36,
+        y: 54,
+      },
+      {
+        id: 'c3-p4',
+        name: 'Bioluminescent Reef Shelf',
+        description: 'Low-light optical frequency sweep and environmental logging.',
+        icon: '🪸',
+        x: 68,
+        y: 70,
+      },
+      {
+        id: 'c3-p5',
+        name: 'The Abyssal Spire Core',
+        description: 'Final expedition terminus and global master beacon uplink confirmation.',
+        icon: '⚜️',
+        x: 48,
+        y: 86,
+      },
+    ],
   },
 };
 
-export const comicAssets = {
-  sky: '/assets/uncharted/intro-sky.webp',
-  plane: '/assets/uncharted/plane.webp',
-  jump: '/assets/uncharted/jump.webp',
-  fall: '/assets/uncharted/fall.webp',
-  mapFragment: '/assets/uncharted/map-fragment.webp',
-  compass: '/assets/uncharted/compass.webp',
-  key: '/assets/uncharted/key.webp',
+// 2. Slug & Letter Aliases Mapping
+const labAliases: Record<string, string> = {
+  a: '1',
+  b: '2',
+  c: '3',
+  portolan: '1',
+  libertalia: '2',
+  'kings-bay': '3',
 };
 
-export function getSubmittedFeedbackForUser(email: string): string[] {
-  if (typeof window === 'undefined' || !email) return [];
+// 3. Proxy Wrapper: Keeps Object.values(expeditionLabs) to 3 items while resolving aliases
+export const expeditionLabs: Record<string, ExpeditionLab> = new Proxy(baseExpeditionLabs, {
+  get(target, prop: string) {
+    if (prop in target) return target[prop];
+    if (typeof prop === 'string' && prop in labAliases) {
+      return target[labAliases[prop]];
+    }
+    return undefined;
+  },
+  ownKeys() {
+    return ['1', '2', '3'];
+  },
+  getOwnPropertyDescriptor(target, prop) {
+    return Object.getOwnPropertyDescriptor(target, prop);
+  },
+});
+
+export function getSubmittedFeedbackForUser(userEmail: string): string[] {
+  if (typeof window === 'undefined') return [];
   try {
-    const key = `submittedFeedback_${email}`;
-    return JSON.parse(localStorage.getItem(key) || '[]');
+    const raw = localStorage.getItem(`feedback_submitted_${userEmail}`) || localStorage.getItem(`submittedFeedback_${userEmail}`);
+    return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
   }
 }
 
-export function isLabCompleted(labId: string, email: string): boolean {
-  const lab = expeditionLabs[labId];
-  if (!lab) return false;
-  const submitted = getSubmittedFeedbackForUser(email);
-  const labProductIds = Object.keys(lab.checkpoints);
-  return labProductIds.every((pid) => submitted.includes(pid));
+export function saveSubmittedFeedbackForUser(userEmail: string, checkpointId: string): string[] {
+  if (typeof window === 'undefined') return [];
+  const current = getSubmittedFeedbackForUser(userEmail);
+  if (!current.includes(checkpointId)) {
+    const updated = [...current, checkpointId];
+    localStorage.setItem(`feedback_submitted_${userEmail}`, JSON.stringify(updated));
+    localStorage.setItem(`submittedFeedback_${userEmail}`, JSON.stringify(updated));
+    window.dispatchEvent(new Event('feedbackSubmitted'));
+    return updated;
+  }
+  return current;
 }
 
-export function getCompletedLabCount(email: string): number {
-  return Object.keys(expeditionLabs).filter((labId) => isLabCompleted(labId, email)).length;
+export function clearSubmittedFeedbackForUser(userEmail: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(`feedback_submitted_${userEmail}`);
+  localStorage.removeItem(`submittedFeedback_${userEmail}`);
+  window.dispatchEvent(new Event('feedbackSubmitted'));
 }
 
-export function getLabDiscoveryProgress(labId: string, email: string): { completed: number; total: number } {
-  const lab = expeditionLabs[labId];
-  if (!lab) return { completed: 0, total: 0 };
-  const submitted = getSubmittedFeedbackForUser(email);
-  const labProductIds = Object.keys(lab.checkpoints);
-  const completed = labProductIds.filter((pid) => submitted.includes(pid)).length;
-  return { completed, total: labProductIds.length };
+export function getLabDiscoveryProgress(
+  labKeyOrId: string | undefined,
+  userEmail: string
+): LabDiscoveryProgress {
+  const key = labKeyOrId || '1';
+  const lab = expeditionLabs[key] || baseExpeditionLabs['1'];
+
+  if (!lab || !lab.checkpoints) {
+    return {
+      completed: 0,
+      total: 0,
+      isComplete: false,
+      isCompleted: false,
+      percentage: 0,
+      doneCount: 0,
+    };
+  }
+
+  const submitted = getSubmittedFeedbackForUser(userEmail);
+  const completed = lab.checkpoints.filter((cp) => submitted.includes(cp.id)).length;
+  const total = lab.checkpoints.length;
+  const isComplete = total > 0 && completed === total;
+  const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  return {
+    completed,
+    total,
+    isComplete,
+    isCompleted: isComplete,
+    percentage,
+    doneCount: completed,
+  };
+}
+
+export function getCompletedLabCount(userEmail: string): number {
+  const submitted = getSubmittedFeedbackForUser(userEmail);
+  return ['1', '2', '3'].filter((labId) => {
+    const lab = baseExpeditionLabs[labId];
+    return lab && lab.checkpoints.every((cp) => submitted.includes(cp.id));
+  }).length;
 }

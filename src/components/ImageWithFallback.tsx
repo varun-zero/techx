@@ -14,7 +14,7 @@ export default function ImageWithFallback({
   src,
   alt,
   fallbackTitle,
-  fallbackIcon = '📜',
+  fallbackIcon = '✦',
   aspectRatio,
   className = '',
   style = {},
@@ -25,32 +25,17 @@ export default function ImageWithFallback({
   if (error || !src) {
     return (
       <div
-        className={`expedition-image-fallback ${className}`}
+        className={`flex flex-col items-center justify-center bg-[#201a15] bg-[radial-gradient(circle,#2b221a_0%,#15110d_100%)] border-2 border-dashed border-[#8b7355] rounded-lg text-uc-gold p-4 text-center font-mono shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] w-full box-border ${className}`}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#201a15',
-          backgroundImage: 'radial-gradient(circle, #2b221a 0%, #15110d 100%)',
-          border: '2px dashed #8b7355',
-          borderRadius: '8px',
-          color: '#d4af37',
-          padding: '1rem',
-          textAlign: 'center',
-          fontFamily: 'monospace',
           aspectRatio: aspectRatio || '16 / 9',
-          boxShadow: 'inset 0 0 15px rgba(0,0,0,0.8)',
-          width: '100%',
-          boxSizing: 'border-box',
           ...style,
         }}
       >
-        <span style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{fallbackIcon}</span>
-        <span style={{ fontSize: '0.85rem', fontWeight: 'bold', letterSpacing: '1px', color: '#e6c875' }}>
+        <span className="text-3xl mb-2 select-none">{fallbackIcon}</span>
+        <span className="text-sm font-bold tracking-wider text-[#e6c875]">
           {fallbackTitle || alt || 'ASSET PENDING'}
         </span>
-        <span style={{ fontSize: '0.65rem', color: '#8b7355', marginTop: '0.25rem' }}>
+        <span className="text-[11px] text-[#8b7355] mt-1">
           [{src ? src.split('/').pop() : 'NO PATH'}]
         </span>
       </div>
@@ -62,14 +47,8 @@ export default function ImageWithFallback({
       src={src}
       alt={alt}
       onError={() => setError(true)}
-      className={className}
-      style={{
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        display: 'block',
-        ...style,
-      }}
+      className={`w-full h-full object-cover block ${className}`}
+      style={style}
       {...props}
     />
   );

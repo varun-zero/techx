@@ -15,90 +15,47 @@ export default function CertificateFragmentModal({ lab, onClose }: CertificateFr
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 9999,
-        backgroundColor: 'rgba(10, 8, 6, 0.92)',
-        backdropFilter: 'blur(8px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1.5rem',
-      }}
+      className="fixed inset-0 z-[9999] bg-[#0A0806]/95 backdrop-blur-md flex items-center justify-center p-4"
     >
       <motion.div
         initial={{ scale: 0.85, y: 30 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.85, y: 30 }}
         transition={{ type: 'spring', damping: 20 }}
-        className="uncharted-card"
-        style={{
-          width: '100%',
-          maxWidth: '420px',
-          padding: '1.75rem',
-          textAlign: 'center',
-          borderColor: '#C5A059',
-          boxShadow: '0 0 35px rgba(197, 160, 89, 0.7)',
-          boxSizing: 'border-box',
-        }}
+        className="w-full max-w-[420px] p-6 sm:p-7 text-center bg-uc-navy/95 rounded-xl border border-uc-gold/60 shadow-[0_0_35px_rgba(212,175,55,0.4)]"
       >
-        <div
-          style={{
-            fontSize: '0.75rem',
-            letterSpacing: '3px',
-            color: '#C5A059',
-            fontFamily: 'var(--font-sans)',
-            fontWeight: '700',
-          }}
-        >
+        <div className="text-xs tracking-[3px] text-uc-gold font-mono font-bold uppercase">
           EXPEDITION SECTOR SURVEYED!
         </div>
 
-        <h2 style={{ fontSize: '1.75rem', color: '#F4ECD8', margin: '0.4rem 0 1.25rem', fontFamily: 'var(--font-title)', letterSpacing: '2px' }}>
+        <h2 className="text-xl sm:text-2xl text-[#F4ECD8] my-2 mb-4 font-uncharted tracking-wide">
           {lab.title}
         </h2>
 
         {/* Fragment Seal Artwork */}
-        <div
-          style={{
-            position: 'relative',
-            width: '160px',
-            height: '160px',
-            margin: '0 auto 1.25rem',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            border: '3px solid #C5A059',
-            boxShadow: '0 0 20px rgba(197, 160, 89, 0.8)',
-          }}
-        >
+        <div className="relative w-[140px] sm:w-[160px] h-[140px] sm:h-[160px] mx-auto mb-4 rounded-full overflow-hidden border-2 border-uc-gold shadow-[0_0_20px_rgba(212,175,55,0.5)]">
           <ImageWithFallback
-            src={lab.fragmentImage}
-            alt={lab.fragmentName}
-            fallbackTitle={`SEAL ${lab.fragmentId}`}
-            fallbackIcon="🗝️"
+            src={lab.fragmentImage || '/assets/images/avery-pirate-coin.png'}
+            alt={lab.fragmentName || lab.title}
+            fallbackTitle={`SEAL ${lab.fragmentId || lab.id}`}
+            fallbackIcon="SEAL"
             aspectRatio="1/1"
           />
         </div>
 
-        <div style={{ fontSize: '1.1rem', color: '#C5A059', fontWeight: 'bold', fontFamily: 'var(--font-serif)', marginBottom: '0.5rem' }}>
-          {lab.fragmentName}
+        <div className="text-base sm:text-lg text-uc-gold font-bold font-serif mb-1">
+          {lab.fragmentName || lab.title}
         </div>
 
-        <p style={{ fontSize: '0.95rem', color: '#D8C3A5', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)' }}>
+        <p className="text-xs sm:text-sm text-[#D8C3A5] mb-5 font-serif leading-relaxed">
           You have successfully surveyed all checkpoints in this sector and recovered an official certificate seal.
         </p>
 
         <button
           onClick={onClose}
-          className="uncharted-btn-gold"
-          style={{
-            width: '100%',
-            padding: '0.9rem',
-            fontSize: '1rem',
-          }}
+          className="w-full py-3 px-4 bg-gradient-to-b from-[#E6C265] via-[#C49219] to-[#8A6008] border border-[#4A3305] rounded-md text-[#231303] font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider cursor-pointer shadow-[0_3px_8px_rgba(0,0,0,0.4)] active:scale-[0.98] transition-transform touch-manipulation"
         >
-          RETURN TO ROUTE MAP 🗺️
+          RETURN TO ROUTE MAP ➔
         </button>
       </motion.div>
     </motion.div>

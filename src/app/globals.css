@@ -1,6 +1,43 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=League+Gothic&family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@600;700&family=Inter:wght@400;600;700&display=swap');
 
+/* Global Image & Asset Reset */
+img, svg {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+/* Jagged Torn Paper Alpha Mask */
+.mask-torn-paper {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M0,15 Q50,0 100,12 T200,8 T300,16 T400,6 T500,14 T600,7 T700,15 T800,9 T900,14 T1000,8 L1000,985 Q950,1000 900,988 T800,992 T700,984 T600,994 T500,986 T400,993 T300,985 T200,991 T100,986 T0,992 Z' fill='%23000'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath d='M0,15 Q50,0 100,12 T200,8 T300,16 T400,6 T500,14 T600,7 T700,15 T800,9 T900,14 T1000,8 L1000,985 Q950,1000 900,988 T800,992 T700,984 T600,994 T500,986 T400,993 T300,985 T200,991 T100,986 T0,992 Z' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+@theme {
+  --color-uc-gold: #D4AF37;
+  --color-uc-gold-bright: #F3E5AB;
+  --color-uc-navy: #0B131E;
+  --color-uc-jungle: #1F3A2B;
+  --color-uc-parchment: #F3E5C8;
+  --color-uc-parchment-dark: #E4D0A8;
+  --color-uc-rust: #652B19;
+  --color-uc-cream: #F9F4E8;
+  --color-uc-blood: #8B1A1A;
+  --color-uc-brass: #B8860B;
+  --color-uc-bronze: #8A6008;
+
+  --font-uncharted: var(--font-uncharted-title), "Antonio", "League Gothic", "Impact", sans-serif;
+  --font-courier: var(--font-courier), "Courier Prime", Courier, monospace;
+  --font-serif: var(--font-uncharted-serif), "IM Fell English", Georgia, serif;
+  --font-mono: var(--font-courier), "IBM Plex Mono", monospace;
+  --font-cinzel: var(--font-cinzel), "Cinzel", Georgia, serif;
+}
+
 :root {
   /* Uncharted Lost Treasure Palette */
   --uc-gold:        #D4AF37;   /* Antique Brass / Gold */
@@ -66,54 +103,163 @@ button, input, select, textarea {
   font-family: var(--font-serif);
 }
 
-/* Authentic Vintage Parchment & Expedition Card Styles */
-.simple-card {
-  background-color: var(--uc-parchment);
-  background-image: 
-    radial-gradient(circle at 10% 10%, rgba(101, 43, 25, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 90% 90%, rgba(101, 43, 25, 0.08) 0%, transparent 50%),
-    linear-gradient(135deg, #F5E8CE 0%, #E6D2AA 100%);
-  color: #2C1E14;
-  border: 2px solid #A88448;
-  border-radius: 8px;
-  box-shadow: 
-    0 12px 35px rgba(0, 0, 0, 0.8),
-    inset 0 0 30px rgba(101, 43, 25, 0.15),
-    0 0 0 1px rgba(243, 229, 171, 0.2);
+/* Field Dossier / Manila Folder Card Styling */
+.dossier-card {
   position: relative;
+  background-color: #F3E5C8;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 23px,
+      rgba(101, 43, 25, 0.05) 24px
+    ),
+    radial-gradient(circle at 10% 10%, rgba(101, 43, 25, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(101, 43, 25, 0.09) 0%, transparent 45%),
+    linear-gradient(135deg, #F8EED8 0%, #E7D4AD 100%);
+  color: #2C1E14;
+  border: 1.5px solid #8C6F42;
+  border-radius: 4px;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    0 10px 28px rgba(0, 0, 0, 0.5),
+    inset 0 0 25px rgba(101, 43, 25, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
 }
 
-/* Double-line vintage cartography border effect */
-.vintage-border {
-  border: 3px double #A88448;
-  outline: 1px solid #523D24;
-  outline-offset: -6px;
+.dossier-card:hover {
+  transform: translateY(-3px) scale(1.01) !important;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 16px 36px rgba(0, 0, 0, 0.65),
+    inset 0 0 30px rgba(101, 43, 25, 0.15);
 }
 
-/* Vintage Buttons - Wax Seal / Embossed Gold Brass */
+/* Manila Top Offset Folder Tab */
+.dossier-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  background: #E3D1A5;
+  border: 1.5px solid #8C6F42;
+  border-bottom: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 6px;
+  font-family: var(--font-courier), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #4A2E1B;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  position: relative;
+  top: 1.5px;
+}
+
+/* Rubber Stamp Cleared / Status Watermark in Background */
+.ink-stamp-watermark {
+  position: absolute;
+  right: 1.2rem;
+  top: 2rem;
+  transform: rotate(-12deg);
+  border: 2.5px dashed rgba(168, 50, 36, 0.35);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-family: var(--font-courier), monospace;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: rgba(168, 50, 36, 0.4);
+  pointer-events: none;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+.ink-stamp-cleared {
+  border-color: rgba(31, 58, 43, 0.6);
+  color: rgba(31, 58, 43, 0.65);
+  transform: rotate(8deg);
+}
+
+/* Alternating Mobile Touch Tilt for Scattered Map Desk Look */
+@media (max-width: 768px) {
+  .tilt-left {
+    transform: rotate(-1deg);
+  }
+  .tilt-right {
+    transform: rotate(1.2deg);
+  }
+}
+
+/* Embossed Brass Plaque & Aged Leather Adventure Button */
 .simple-btn-primary {
-  background: linear-gradient(180deg, #D4AF37 0%, #997A23 100%);
+  background: 
+    linear-gradient(180deg, #E0B84C 0%, #A97E25 50%, #7E5B10 100%);
   color: #1A1108;
   font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  border-radius: 4px;
-  border: 1px solid #FFF1C5;
+  border-radius: 3px;
+  border: 1.5px solid #FDF0C8;
+  outline: 1px solid #4E3812;
   cursor: pointer;
   box-shadow: 
-    0 4px 14px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 0 10px rgba(212, 175, 55, 0.3);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  text-shadow: 0 1px 0 rgba(255, 241, 197, 0.5);
+    0 4px 10px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -2px 4px rgba(60, 40, 5, 0.5);
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  text-shadow: 0 1px 0 rgba(255, 241, 197, 0.6);
+  position: relative;
 }
 
 .simple-btn-primary:hover {
-  background: linear-gradient(180deg, #E6C250 0%, #B3902D 100%);
+  background: linear-gradient(180deg, #F0CA5E 0%, #BA8E2C 50%, #8E6814 100%);
   box-shadow: 
-    0 6px 20px rgba(212, 175, 55, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    0 6px 18px rgba(212, 175, 55, 0.45),
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+}
+
+.simple-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Red Ink Field Stamp Button */
+.btn-field-stamp {
+  background: #7A2117;
+  background-image: 
+    radial-gradient(circle at center, rgba(168, 50, 36, 0.9) 0%, #681910 100%);
+  color: #FFF6E5;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 1.5px solid #C45547;
+  outline: 1px dashed #FFA494;
+  outline-offset: -4px;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.btn-field-stamp:hover {
+  background: #8F271B;
+  box-shadow: 
+    0 6px 18px rgba(168, 50, 36, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   transform: translateY(-2px);
 }
 
@@ -130,28 +276,60 @@ button, input, select, textarea {
 
 /* Uncharted Distressed Ultra-Tall Condensed Title Typography */
 .uncharted-title {
-  font-family: var(--font-uncharted-title);
+  font-family: var(--font-uncharted-title), sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: -0.5px;
-  transform: scaleY(1.45);
+  letter-spacing: -0.01em;
+  transform: scaleY(1.35);
   transform-origin: center;
   display: inline-block;
   color: #1A120B;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-  filter: contrast(140%) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.4), 0 2px 5px rgba(0, 0, 0, 0.35);
 }
 
 .uncharted-sub-title {
-  font-family: var(--font-uncharted-title);
+  font-family: var(--font-uncharted-title), sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transform: scaleY(1.25);
+  letter-spacing: 0.05em;
+  transform: scaleY(1.2);
   transform-origin: center;
   display: inline-block;
   color: #652B19;
-  filter: contrast(120%);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.uncharted-card-title {
+  font-family: var(--font-uncharted-title), sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  transform: scaleY(1.3);
+  transform-origin: left center;
+  display: inline-block;
+  color: #110C08;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.uncharted-num-title {
+  font-family: var(--font-uncharted-title), sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  transform: scaleY(1.3);
+  transform-origin: left center;
+  display: inline-block;
+  color: #652B19;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.uncharted-btn-text {
+  font-family: var(--font-uncharted-title), sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transform: scaleY(1.2);
+  transform-origin: center;
+  display: inline-block;
 }
 
 /* Vintage Map Grid Background Overlay */

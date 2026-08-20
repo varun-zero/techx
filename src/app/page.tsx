@@ -37,25 +37,26 @@ export default function WelcomePage() {
   // Show welcome back card if user is already logged in
   if (user) {
     return (
-      <main style={{ padding: '2rem 1rem', maxWidth: '480px', margin: '0 auto', textAlign: 'center', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <main className="p-4 max-w-md mx-auto text-center min-h-screen flex flex-col justify-center select-none font-serif">
         <div
           style={{
-            backgroundColor: '#201a15',
-            border: '2px solid #8b7355',
-            borderRadius: '8px',
-            padding: '2rem 1.5rem',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.8)',
+            backgroundImage: `url('/assets/images/torn-card-bg.png')`,
+            backgroundSize: '100% 100%',
           }}
+          className="relative w-full p-8 sm:p-10 drop-shadow-[0_12px_30px_rgba(0,0,0,0.9)] text-[#2b1704]"
         >
-          <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#FFD700', fontWeight: 'bold' }}>
+          <div className="text-[10px] tracking-[3px] text-[#7a481c] font-bold font-mono uppercase mb-1">
             ACTIVE EXPEDITION SESSION
           </div>
-          <h1 style={{ fontSize: '1.6rem', color: '#f4ecd8', margin: '0.5rem 0' }}>WELCOME BACK</h1>
-          <p style={{ color: '#c6c6c6', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+          <h1 className="text-2xl sm:text-3xl text-[#241308] font-bold font-['Cinzel',_serif] my-1">
+            WELCOME BACK
+          </h1>
+          <p className="text-xs text-[#543d2b] font-serif italic mb-6">
             Explorer: <strong>{user.name}</strong> ({user.email})<br />
-            Department: <strong>{user.department}</strong>
+            Guild Sector: <strong>{user.department}</strong>
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+
+          <div className="flex flex-col gap-3">
             <button
               onClick={() => {
                 const userFeedbackKey = `submittedFeedback_${user.email}`;
@@ -68,54 +69,31 @@ export default function WelcomePage() {
                 }
               }}
               style={{
-                width: '100%',
-                padding: '0.9rem',
-                backgroundColor: '#5E8D4A',
-                color: '#fff',
-                border: '2px solid #95c781',
-                borderRadius: '4px',
-                fontSize: '1rem',
-                fontWeight: 'bold',
-                fontFamily: 'var(--font-sans)',
-                cursor: 'pointer',
+                clipPath:
+                  'polygon(6px 0%, calc(100% - 6px) 0%, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0% calc(100% - 6px), 0% 6px)',
               }}
+              className="w-full py-3 px-4 bg-gradient-to-b from-[#d4af37] via-[#b38920] to-[#7a5214] text-[#140802] font-bold text-xs uppercase tracking-widest shadow-md transition hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2 font-['Cinzel',_serif] cursor-pointer"
             >
-              CONTINUE EXPEDITION 🗺️
+              <span>CONTINUE EXPEDITION</span>
+              <span>➔</span>
             </button>
 
             <button
               onClick={() => router.push('/leaderboard')}
               style={{
-                width: '100%',
-                padding: '0.8rem',
-                backgroundColor: '#FFD700',
-                color: '#000',
-                border: '2px solid #fff',
-                borderRadius: '4px',
-                fontSize: '0.95rem',
-                fontWeight: 'bold',
-                fontFamily: 'var(--font-sans)',
-                cursor: 'pointer',
+                clipPath:
+                  'polygon(6px 0%, calc(100% - 6px) 0%, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0% calc(100% - 6px), 0% 6px)',
               }}
+              className="w-full py-2.5 px-4 bg-[#2b1b11] border border-[#8b6943]/60 text-[#f2dfbe] font-bold text-xs uppercase tracking-widest shadow transition hover:bg-[#3d2719] active:scale-[0.98] font-['Cinzel',_serif] cursor-pointer"
             >
-              🏆 LEADERBOARD
+              EXPLORER ROSTER
             </button>
 
             <button
               onClick={logout}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#8B0000',
-                color: '#fff',
-                border: '1px solid #d45555',
-                borderRadius: '4px',
-                fontSize: '0.85rem',
-                fontFamily: 'var(--font-sans)',
-                cursor: 'pointer',
-              }}
+              className="w-full py-2 text-[10px] text-[#8b261d] font-mono font-bold tracking-wider uppercase hover:underline cursor-pointer"
             >
-              LOGOUT
+              [ LOGOUT ALIAS ]
             </button>
           </div>
         </div>
