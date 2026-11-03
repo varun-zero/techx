@@ -210,20 +210,3 @@ export async function getAdmin(username: string): Promise<Admin | null> {
   const admin = await collection.findOne({ username });
   return admin ? { ...admin, _id: admin._id?.toString() } : null;
 }
-
-export async function initializeAdmin(): Promise<void> {
-  const db = await getDatabase();
-  const collection = db.collection<Admin>('admins');
-  
-  const existingAdmin = await collection.countDocuments();
-  if (existingAdmin > 0) return; // Already initialized
-  
-  const admin: Omit<Admin, '_id'> = {
-    username: 'vcet-nsdc',
-    password: 'AIDS@2025', // In production, this should be hashed
-    permissions: ['leaderboard', 'feedback_view', 'analytics'],
-    createdAt: new Date()
-  };
-  
-  await collection.insertOne(admin);
-}

@@ -17,42 +17,26 @@ interface AdminContextType {
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
-// Admin credentials
-const ADMIN_CREDENTIALS = {
-  username: 'vcet-nsdc',
-  password: 'AIDS@2025'
-};
-
 export function AdminProvider({ children }: { children: ReactNode }) {
   const [admin, setAdmin] = useState<Admin | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Check for existing admin session on mount
   useEffect(() => {
-    const checkStoredAdmin = () => {
+    const checkStoredAdmin = async () => {
       try {
-        const storedAdmin = localStorage.getItem('admin_session');
-        const sessionTimestamp = localStorage.getItem('admin_session_timestamp');
-        
-        if (storedAdmin && sessionTimestamp) {
-          const adminData = JSON.parse(storedAdmin);
-          const timestamp = parseInt(sessionTimestamp);
-          const now = Date.now();
-          const sessionTimeout = 12 * 60 * 60 * 1000; // 12 hours (half a day)
-          
-          // Check if session is still valid
-          if (now - timestamp < sessionTimeout) {
-            setAdmin(adminData);
-          } else {
-            // Session expired, clear it
-            localStorage.removeItem('admin_session');
-            localStorage.removeItem('admin_session_timestamp');
+        const response = await fetch('/api/admin/session', {
+          credentials: 'same-origin',
+          cache: 'no-store',
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.username) {
+            setAdmin({ username: data.username, isAuthenticated: true });
           }
         }
       } catch (error) {
         console.error('Error restoring admin session:', error);
-        localStorage.removeItem('admin_session');
-        localStorage.removeItem('admin_session_timestamp');
       } finally {
         setIsLoading(false);
       }
@@ -63,11 +47,14 @@ export function AdminProvider({ children }: { children: ReactNode }) {
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-        const adminData = { username, isAuthenticated: true };
-        setAdmin(adminData);
-        localStorage.setItem('admin_session', JSON.stringify(adminData));
-        localStorage.setItem('admin_session_timestamp', Date.now().toString());
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ username, password }),
+      });
+      if (response.ok) {
+        setAdmin({ username, isAuthenticated: true });
         return true;
       }
       return false;
@@ -79,8 +66,10 @@ export function AdminProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setAdmin(null);
-    localStorage.removeItem('admin_session');
-    localStorage.removeItem('admin_session_timestamp');
+    void fetch('/api/admin/logout', {
+      method: 'POST',
+      credentials: 'same-origin',
+    });
   };
 
   const isAdmin = admin?.isAuthenticated === true;

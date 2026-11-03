@@ -1,13 +1,10 @@
 import { NextResponse } from 'next/server';
-import { initializeLabs, initializeAdmin } from '@/lib/services';
+import { initializeLabs } from '@/lib/services';
 
 export async function POST() {
   try {
     // Initialize labs data
     await initializeLabs();
-    
-    // Initialize admin user
-    await initializeAdmin();
     
     return NextResponse.json({ 
       message: 'Database initialized successfully',
